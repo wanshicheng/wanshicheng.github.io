@@ -1,0 +1,65 @@
+---
+author: admin
+comments: true
+date: 2016-11-17 04:14:00+00:00
+layout: post
+title: RHEL7密码恢复
+wordpress_id: 132
+categories:
+- Linux
+tags:
+- redhat
+---
+
+在Linux中，以管理员身份登录或具有完全sudo的访问权限的用户恢复根密码是一个简单任务,但是如果管理员没有登陆，情况就有些复杂了。在这种情况下,管理员可以从Live CD启动，挂载root文件系统，然后编辑/etc/shadow。管理员还应该能够在不使用外部媒体的执行root密码恢复。
+
+在Red Hat企业版Linux 6和更早版本，管理员可以引导系统进入配有root提示符runlevel 1的界面。在安装有RHEL7的机器上最接近runlevel 1的是rescue.target和emergency.target，两者都需要root的密码进行登录。
+
+在RHEL7时，可能有从initramfs的暂停在某些点运行的脚本，提供了一个root shell ，然后在当shell退出并继续。而这主要是用来调试，它也可以被用来恢复丢失的根密码：
+
+1. 重启系统。
+2.按下任意键就打断引导加载程序倒计时。
+3.将光标移动到需要引导的条目。
+4. 按下e编辑选择的条目。
+5. 将光标移动到kernel命令行 (以linux16开始的那一行).
+6. 在后面加入空格和rd.break (t这将在控制权从initramfs交给实际系统时中断)。
+7. 按下Ctrl+x使用修改并启动。
+
+环境initramfs提示符将显示任何控制台最后一个内核命令行上指定的。
+
+
+## 重点
+
+
+SELinux的还没有在这一点上启用，所以正在创建任何新文件将不会分配给他们的SELinux上下文。请记住，一些工具（如passwd ）首先创建一个新的文件，然后在地方，他们的目的是编辑，有效地创建一个新的文件没有SELinux上下文的文件移动。
+
+要从此点恢复root密码，请使用以下步骤：
+
+1. 重载/sysroot使其可读写：
+
+```sh
+switch_root:/# mount -oremount,rw /sysroot
+```
+
+2. 进入chroot jail, /sysroot会被当作系统树的root：
+
+```sh
+switch_root:/# chroot /sysroot
+```
+
+3.设置一个新密码：
+
+```sh
+sh-4.2#passwd root
+```
+
+4. 确保所有未被标记的文件（包括当前的/etc/shadow） 在启动时获得标记。
+
+```sh
+sh-4.2#touch /.autorelabel
+
+```
+
+5. 输入exit两次. 第一次将退出chroot jail, 第二次将退出initramfs debug shell.
+
+此时，系统将继续启动, 执行完整的SELinux relabel, 然后重启。
