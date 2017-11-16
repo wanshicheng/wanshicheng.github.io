@@ -4,7 +4,7 @@ comments: true
 date: 2016-11-13 11:43:08+00:00
 layout: post
 title: Mac下使用xampp的Acccess forbidden错误
-cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories:
 - linux
 ---

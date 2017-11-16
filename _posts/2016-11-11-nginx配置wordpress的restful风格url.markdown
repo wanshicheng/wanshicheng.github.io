@@ -3,7 +3,7 @@ author: wanshicheng
 date: 2016-11-11 12:10:15+00:00
 layout: post
 title: Nginx配置Wordpress的Restful风格url
-cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories: Linux
 ---
 

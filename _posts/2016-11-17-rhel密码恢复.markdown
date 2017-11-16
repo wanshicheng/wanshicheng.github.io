@@ -2,7 +2,7 @@
 date: 2016-11-17
 layout: post
 title: RHEL7密码恢复
-cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories:
 - Linux
 tags:

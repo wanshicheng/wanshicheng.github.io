@@ -4,7 +4,7 @@ comments: true
 date: 2016-12-14 03:22:16+00:00
 layout: post
 title: RHEL 6.7换CentOS的yum源
-cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories:
 - Linux
 ---

@@ -3,7 +3,7 @@ author: admin
 date: 2016-11-12
 layout: post
 title: Java代码精简神器Lombok
-cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories: Coding
 tags: java lombok
 ---
