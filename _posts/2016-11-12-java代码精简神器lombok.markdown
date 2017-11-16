@@ -1,14 +1,11 @@
 ---
 author: admin
-comments: true
-date: 2016-11-12 08:47:48+00:00
+date: 2016-11-12
 layout: post
 title: Java代码精简神器Lombok
-categories:
-- Coding
-tags:
-- java
-- lombok
+cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+categories: Coding
+tags: java lombok
 ---
 
 ## 简介

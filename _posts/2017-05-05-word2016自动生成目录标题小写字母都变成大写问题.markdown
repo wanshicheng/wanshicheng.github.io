@@ -4,6 +4,7 @@ comments: true
 date: 2017-05-05 03:24:43+00:00
 layout: post
 title: Word2016自动生成目录标题小写字母都变成大写问题
+cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
 categories:
 - Life
 tags:

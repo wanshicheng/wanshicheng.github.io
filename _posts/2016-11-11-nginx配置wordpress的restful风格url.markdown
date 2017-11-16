@@ -1,11 +1,10 @@
 ---
 author: wanshicheng
-comments: true
 date: 2016-11-11 12:10:15+00:00
 layout: post
 title: Nginx配置Wordpress的Restful风格url
-categories:
-- Linux
+cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+categories: Linux
 ---
 
 开始做seo的优化，当然牵扯到固定链接，wordpress提供多种类型的链接形式：

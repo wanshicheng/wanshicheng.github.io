@@ -1,11 +1,10 @@
 ---
 author: wanshicheng
-comments: true
 date: 2016-11-09 08:55:14+00:00
 layout: post
 title: 在虚拟机上装Kali Linux
-categories:
-- Linux
+cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+categories: Linux
 tags:
 - Linux
 ---
