@@ -1,0 +1,84 @@
+---
+layout: post
+title: 'LaTeX快速指南（一）'
+subtitle: '安装LaTeX'
+date: 2017-11-17
+categories: LaTeX
+cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
+tags: LaTeX 排版 设计
+---
+
+目前世界上有许多电子排版系统。这些系统各有特点，也各有自己的适用范围。TeX 就是一种优秀的电子排版系统。
+
+## 下载安装
+
+Knuth 创造了 TeX 之后，免费公布了 TeX 程序的源代码。目前用得比较多的发行版本是 TeX Live 和 MikTex。如果你是初学者，最好下载 TeX Live 套装。它不但包含了所有操作系统需要的程序，而且有许许多多宏包，如果你不是特别特殊的用户，有了它你可以完成你的任何任务。而且它直接拷贝到硬盘上就可以用了。
+
+
+TeX Live下载地址：[http://tug.org/texlive/acquire-iso.html](http://tug.org/texlive/acquire-iso.html)
+
+下载完成后，你可以选择需要安装宏包，当然，你也可以直接点击下一步，就像安装其它Windows程序一样。TeX Live安装过程可能耗费几十分钟甚至几个小时。
+
+安装完毕后，为了测试是否正确安装，可以在CMD中（Linux用户当然用终端啦！）输入：
+
+```shell
+tex -v
+```
+
+在CMD中会显示一些信息：
+
+```shell
+TeX 3.14159265 (TeX Live 2017/W32TeX)
+kpathsea version 6.2.3
+Copyright 2017 D.E. Knuth.
+There is NO warranty.  Redistribution of this software is
+covered by the terms of both the TeX copyright and
+the Lesser GNU General Public License.
+For more information about these matters, see the file
+named COPYING and the TeX source.
+Primary author of TeX: D.E. Knuth.
+```
+
+出现类似信息就说明安装成功了。
+
+## TeX初体验
+
+右键新建一个文本文档，命名为hello.tex，然后输入以下内容：
+
+```tex
+\documentclass{article}
+
+
+\begin{document}
+
+
+Hello, world! \LaTex.
+
+\end{document}
+```
+
+在CMD中输入:
+
+```shell
+latex hello.tex
+```
+
+就会得到一个名为hello.dvi的中间文件。然后再在CMD中输入：
+
+```shell
+pdflatex hello.dvi
+```
+
+这样就可以得到一个 hello.pdf 的文档了。
+
+[点击查看文档效果](https://github.com/wanshicheng/LaTeX-quick-tour/blob/master/hello.pdf)
+
+也可以直接在CMD中输入xelatex hello.tex，就会直接编译出pdf文件。
+
+## 安装TeXstudio
+
+为了能够更加方便地编辑TeX，可以下载TeXstudio。
+
+TeXstudio下载地址：[http://texstudio.sourceforge.net/](http://texstudio.sourceforge.net/)
+
+依次点击Options -> Config TeXstudio -> buil，将 Default Compiler 改为 XeLaTeX。因为默认的编译器对中文的支持不好。在General里还可以将软件的语言修改成中文的。
