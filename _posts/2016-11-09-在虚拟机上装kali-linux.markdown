@@ -1,12 +1,11 @@
 ---
-author: wanshicheng
-date: 2016-11-09 08:55:14+00:00
+author: 万仕诚
+date: 2016-11-09
 layout: post
 title: 在虚拟机上装Kali Linux
-cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
+cover: 'http://file.wanshicheng.org/wp-content/uploads/2016/11/Kali-Linux-1024x578.png'
 categories: Linux
-tags:
-- Linux
+tags: Linux Kali Debian
 ---
 
 Kali Linux是基于Debian的Linux发行版， 设计用于数字取证和渗透测试。

@@ -52,7 +52,7 @@ Primary author of TeX: D.E. Knuth.
 \begin{document}
 
 
-Hello, world! \LaTex.
+Hello, \LaTex.
 
 \end{document}
 ```
