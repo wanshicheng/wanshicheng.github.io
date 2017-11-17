@@ -21,13 +21,13 @@ TeX Live下载地址：[http://tug.org/texlive/acquire-iso.html](http://tug.org/
 
 安装完毕后，为了测试是否正确安装，可以在CMD中（Linux用户当然用终端啦！）输入：
 
-```shell
+```powershell
 tex -v
 ```
 
 在CMD中会显示一些信息：
 
-```shell
+```powershell
 TeX 3.14159265 (TeX Live 2017/W32TeX)
 kpathsea version 6.2.3
 Copyright 2017 D.E. Knuth.
@@ -45,7 +45,7 @@ Primary author of TeX: D.E. Knuth.
 
 右键新建一个文本文档，命名为hello.tex，然后输入以下内容：
 
-```tex
+```latex
 \documentclass{article}
 
 
@@ -59,13 +59,13 @@ Hello, world! \LaTex.
 
 在CMD中输入:
 
-```shell
+```powershell
 latex hello.tex
 ```
 
 就会得到一个名为hello.dvi的中间文件。然后再在CMD中输入：
 
-```shell
+```powershell
 pdflatex hello.dvi
 ```
 
