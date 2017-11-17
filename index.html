@@ -1,7 +1,7 @@
 ---
 layout: default
 home-title: 万仕诚的博客
-description: 很多人试图变得出色，而我只想变得更理性。
+description: 一个不会数学的画家就不是一个好的程序员
 ---
 
 {% include header.html %}
@@ -9,8 +9,8 @@ description: 很多人试图变得出色，而我只想变得更理性。
 <div class="g-banner home-banner {{ site.theme-color | prepend: 'banner-theme-' }}" data-theme="{{ site.theme-color }}">
     <h2>{{ page.home-title }}</h2>
     <h3>{{ page.description }}</h3>
-    {% if page.header-img %}
-    <img class="header-img" src="{{ page.header-img | prepend: site.baseurl }}" alt="">
+    {% if site.header-img %}
+    <img class="header-img" src="{{ site.header-img-url }}" alt="">
     {% endif %}
 </div>
 
