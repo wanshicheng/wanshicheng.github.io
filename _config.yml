@@ -60,8 +60,15 @@ markdown: kramdown
 highlighter: rouge
 kramdown:
   input: GFM
+  extensions:
+    - autolink
+    - footnotes
+    - smart
 
 RSS: true
 
 # Plugins
-plugins: [jekyll-paginate, jekyll-sitemap]
+plugins: 
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
