@@ -9,7 +9,9 @@ categories: latex
 tags: latex 排版 设计
 ---
 
-目前世界上有许多电子排版系统。这些系统各有特点，也各有自己的适用范围。TeX 就是一种优秀的电子排版系统。
+目前世界上有许多电子排版系统。这些系统各有特点，也各有自己的适用范围。TeX 就是一种优秀的电子排版系统。TeX 是 LaTeX 的基石,LaTeX 建立在 TeX 之上。但是，与 Word 相比，LaTeX显得不那么友好，为了帮助大家快速入门，于是编写了《LaTeX快速指南》系列。希望大家都能写出优雅的文档。
+
+大家要勤动手，遇到 Bug 可以在下面留言。
 
 ## 下载安装
 
@@ -26,6 +28,7 @@ TeX Live下载地址：[http://tug.org/texlive/acquire-iso.html](http://tug.org/
 tex -v
 ```
 
+
 在CMD中会显示一些信息：
 
 ```bash
@@ -40,7 +43,11 @@ named COPYING and the TeX source.
 Primary author of TeX: D.E. Knuth.
 ```
 
-出现类似信息就说明安装成功了。
+出现类似信息就说明安装成功了。确认安装完成后可以执行更新命令：
+
+```bash
+tlmgr update --all
+```
 
 ## TeX初体验
 

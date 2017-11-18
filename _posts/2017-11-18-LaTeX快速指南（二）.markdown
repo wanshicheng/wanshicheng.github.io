@@ -1,0 +1,158 @@
+---
+layout: post
+author: 万仕诚
+title: 'LaTeX快速指南（二）'
+subtitle: 'LaTex的结构'
+date: 2017-11-18
+cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
+categories: latex
+tags: latex 排版 设计
+---
+
+在开始撰写LaTeX前，一个好的习惯是新建一个以文档名命名的文件夹，因为LaTeX在编译成PDF的过程中会产生许多中间文件，有一个文件夹就可以方便管理。
+
+## 基本结构
+
+LaTeX 分位导言区和正文区两个部分，两者缺一不可。导言区主要进行全局设置。正文区也称为文稿区，这里便是文档开始的地方。
+
+```latex
+% 导言区
+\documentclass{article} % 改变类可以改变文档结构，还有book、report、letter等类
+
+\usepackage{ctex} % 引用ctex宏包才可以使用中文
+
+\title{\LaTeX 源文件的基本结构}
+\author{张三}
+\date{\today}
+
+% 正文区（文稿区）
+\begin{document} % 有且只有一个document环境
+	\maketitle % 输出导言区定义的标题、作者和时间等，注意：letter没有\maketitle命令
+	空行
+	
+	空行
+	
+	不空行 % 不空行不会自动换行
+	不空行
+	
+	内数学公式：$f(x)=x^3$ % “$”区域内的是数学模式，区域外的一般称为文本模式，单“$”表示行内公式
+	
+	行间数学公式：$$f(x)=\sin \pi x$$ % 双“$”表示行间公式
+	
+	带编号的数学公式：\begin{equation} % 产生带编号的行间公式
+	(A+B)^2=A^2+2AB+B^2%
+	\end{equation}
+\end{document}
+```
+
+[点击查看文档效果](https://github.com/wanshicheng/LaTeX-quick-tour/blob/master/source/source.pdf)
+
+后面还会有专门的一章对数学公式的排版进行详细介绍。
+
+需要注意的是 LaTeX 是不可以直接编译中文的，需要引入ctex宏包，关于宏包，后面的文章会有更多介绍。你也可以在CMD中输入：
+
+```bash
+texdoc ctex
+```
+
+这样可以打开《ctex宏集手册》，里面的东西一般人很难全部用到，类似本文的快速入门就显得很有必要。
+
+在 LaTeX 中，使用“%”对文档进行注释。相对于Word而言，它有一个好处就是，在修改论文时，可以将以后会用到的内容注释起来，这样编译出来的文档就不会有这部分内容。在与人协同工作时，也可以用注释留下说明文字。
+
+
+## 篇章结构
+
+在了解 LaTex 的基本结构后，你一定迫不及待想知道怎样编辑目录、划分章节、分页等。
+
+```latex
+\documentclass{ctexart} % ctexbook, ctexrep
+
+\begin{document}
+	
+	\tableofcontents % 产生文档目录
+
+	\newpage % 分页
+	
+	\section{导言}
+	本书是一部简明扼要的哲学入门，是写给第一次接触哲学的读者看的。一般说来，人们上大学之后才开始学习哲学，所以我想，本书的大多数读者都应该在读大学，或者已经从大学毕业。不过年龄问题与哲学学科的本质并无关系，要是有喜欢抽象观念和理论论证的聪明高中生能读到这本书，并且也能从中享受到哲学思考的乐趣，我会非常高兴的。
+	
+	% 为了保证源文件的清晰，分段通常是用插入空行来实现的。
+	在系统学习关于世界的知识之前，我们的分析能力就已经高度发达了。\par 大概十四岁左右，许多人就开始以自己的方式思考哲学问题了：什么东西真的存在？
+	
+	% 反斜杠只是换行，并没有产生新的段落
+	本书直接介绍九个哲学问题，其中每一个都可以被独立地理解，而不必涉及思想史。\\本书不打算讨论过去伟大的哲学著作，也不讲这些著作的文化背景。
+	
+	\section{外部世界是否存在？}
+	\subsection{他人的意识}
+	\subsubsection{身—心问题} % 在book中subsubsection命令不起作用
+	\subsection{第二节}
+%	\chapter{人生的意义}
+	\subsection{词语的意义}
+	\subsubsection{自由意志}
+	\subsection{对与错}
+	
+\end{document}
+```
+
+[点击查看文档效果](https://github.com/wanshicheng/LaTeX-quick-tour/blob/master/doc-structure/doc-structure-1.pdf)
+
+这次我们没有使用 \usepackage{ctex} 命令，而是直接使用了 ctexart 文档类，来大道编译中文的目的。注意文档“基本结构”那里使用的是 article 文档类。
+
+在 LaTex 中有这些章节命令：\part、\chapter、\section 、\subsection、\subsubsection、\paragraph、\subparagraph。但是在 article 文档类中，不能使用 \chapter 命令，在 book 文档类中不能使用 \subsubsection 命令。使用 \tableofcontents 命令可以自动从各章节标题生成目录。
+
+```latex
+\documentclass[UTF8]{ctexart} % ctexbook, ctexrep
+
+\usepackage{hyperref} %生产有链接的目录
+\hypersetup{hidelinks}
+
+\ctexset {
+	section = {
+		format+ = \zihao{-4} \heiti \raggedright,
+		name = {第,章、},
+		number = \chinese{section},
+		beforeskip = 1.0ex plus 0.2ex minus .2ex,
+		afterskip = 1.0ex plus 0.2ex minus .2ex,
+		aftername = \hspace{0pt}
+	},
+	subsection = {
+		format+ = \zihao{5} \heiti \raggedright,
+		% name = {thesubsection},
+		name = {第,节、},
+		number = \arabic{subsection},
+		beforeskip = 1.0ex plus 0.2ex minus .2ex,
+		afterskip = 1.0ex plus 0.2ex minus .2ex,
+		aftername = \hspace{0pt}
+	}
+}
+
+\begin{document}
+	
+	\tableofcontents % 产生文档目录
+
+	\newpage % 分页
+	
+	\section{导言}
+	本书是一部简明扼要的哲学入门，是写给第一次接触哲学的读者看的。一般说来，人们上大学之后才开始学习哲学，所以我想，本书的大多数读者都应该在读大学，或者已经从大学毕业。不过年龄问题与哲学学科的本质并无关系，要是有喜欢抽象观念和理论论证的聪明高中生能读到这本书，并且也能从中享受到哲学思考的乐趣，我会非常高兴的。
+	
+	% 为了保证源文件的清晰，分段通常是用插入空行来实现的。
+	在系统学习关于世界的知识之前，我们的分析能力就已经高度发达了。\par 大概十四岁左右，许多人就开始以自己的方式思考哲学问题了：什么东西真的存在？
+	
+	% 反斜杠只是换行，并没有产生新的段落
+	本书直接介绍九个哲学问题，其中每一个都可以被独立地理解，而不必涉及思想史。\\本书不打算讨论过去伟大的哲学著作，也不讲这些著作的文化背景。
+	
+	\section{外部世界是否存在？}
+	\subsection{他人的意识}
+	\subsubsection{身—心问题} % 在book中subsubsection命令不起作用
+	\subsection{第二节}
+	\subsection{词语的意义}
+	\subsubsection{自由意志}
+	\subsection{对与错}
+	
+\end{document}
+```
+
+[点击查看文档效果](https://github.com/wanshicheng/LaTeX-quick-tour/blob/master/doc-structure/doc-structure-2.pdf)
+
+使用 \usepackage{hyperref} 命令可以让生成的文章目录有链接，点击时会自动跳转到该章节。而且也会使得生成的pdf 文件带有目录书签。同时还需要使用 \hypersetup{hidelinks}
+命令，消除在带链接目录中出现的红框。
