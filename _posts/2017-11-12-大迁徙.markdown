@@ -5,7 +5,7 @@ title:  大迁徙
 date:   2017-11-12
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories: 生活
-tags: Jekyll
+tags: jekyll
 ---
 
 终于自由了！

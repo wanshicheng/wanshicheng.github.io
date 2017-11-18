@@ -6,7 +6,7 @@ subtitle: '安装LaTeX'
 date: 2017-11-17
 cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
 categories: latex
-tags: LaTeX 排版 设计
+tags: latex 排版 设计
 ---
 
 目前世界上有许多电子排版系统。这些系统各有特点，也各有自己的适用范围。TeX 就是一种优秀的电子排版系统。

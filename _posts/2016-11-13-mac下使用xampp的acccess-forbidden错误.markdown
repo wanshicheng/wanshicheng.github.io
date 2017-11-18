@@ -8,7 +8,7 @@ categories: linux
 tags: mac xampp
 ---
 
-万事开头难，安装完xampp后，一直如下报错：
+万事开头难，安装完 Xampp 后，一直如下报错：
 
 **Access forbidden!**
 

@@ -5,6 +5,7 @@ layout: post
 title: RHEL 6.7换CentOS的yum源
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories: linux
+tags: linux
 ---
 R
 HEL 6.7的源需要序列号，可以使用CentOS的yum源来替代。

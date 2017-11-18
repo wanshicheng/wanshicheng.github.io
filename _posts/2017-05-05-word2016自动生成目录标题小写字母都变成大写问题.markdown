@@ -5,7 +5,7 @@ layout: post
 title: Word2016自动生成目录标题小写字母都变成大写问题
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories: 生活
-tags: Word
+tags: word
 ---
 
 最近写论文，用的是 Word 2016，自动生成的目录把标题的小写字母都变成大写。

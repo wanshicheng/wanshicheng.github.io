@@ -4,7 +4,7 @@ layout: post
 title: RHEL7密码恢复
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories: linux
-tags: Red-Hat 密码
+tags: linux 密码
 ---
 
 在Linux中，以管理员身份登录或具有完全sudo的访问权限的用户恢复根密码是一个简单任务,但是如果管理员没有登陆，情况就有些复杂了。在这种情况下,管理员可以从Live CD启动，挂载root文件系统，然后编辑/etc/shadow。管理员还应该能够在不使用外部媒体的执行root密码恢复。

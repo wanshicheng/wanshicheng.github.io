@@ -5,7 +5,7 @@ layout: post
 title: Java代码精简神器Lombok
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
 categories: java
-tags: Java Lombok
+tags: java lombok
 ---
 
 ## 简介
