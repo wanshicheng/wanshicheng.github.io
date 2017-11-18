@@ -9,6 +9,7 @@ baseurl: ''
 
 # Navigation links
 nav:
+  home: '/'
   tags: '/tags/'
   links: '/links/'
  
