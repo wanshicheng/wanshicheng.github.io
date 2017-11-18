@@ -23,7 +23,7 @@ avatar: 'http://file.wanshicheng.org/assets/img/profile.png'
 search: true
 
 # Night mode
-nightMode: true
+nightMode: false
 
 # header-img
 header-img: true
