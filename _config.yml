@@ -29,9 +29,8 @@ header-img: true
 header-img-url: 'http://file.wanshicheng.org/assets/img/header_img.jpg'
 
 # Comments
-#disqus: false
-#disqus_url: 'https://liaokeyu.disqus.com/embed.js'
 changyan: true
+changyan-appid: cysGPef2B
 
 # Share
 social-share: true

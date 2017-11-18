@@ -1,11 +1,11 @@
 ---
-author: admin
+author: 万仕诚
 date: 2016-11-12
 layout: post
 title: Java代码精简神器Lombok
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
-categories: Coding
-tags: java lombok
+categories: java
+tags: Java Lombok
 ---
 
 ## 简介

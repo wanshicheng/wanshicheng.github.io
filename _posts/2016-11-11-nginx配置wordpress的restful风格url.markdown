@@ -4,7 +4,8 @@ date: 2016-11-11 12:10:15+00:00
 layout: post
 title: Nginx配置Wordpress的Restful风格url
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
-categories: Linux
+categories: linux
+tags: Linux Nginx
 ---
 
 开始做seo的优化，当然牵扯到固定链接，wordpress提供多种类型的链接形式：

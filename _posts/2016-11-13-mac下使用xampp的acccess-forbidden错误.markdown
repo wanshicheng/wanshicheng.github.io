@@ -1,12 +1,11 @@
 ---
-author: admin
-comments: true
-date: 2016-11-13 11:43:08+00:00
+author: 万仕诚
+date: 2016-11-13
 layout: post
 title: Mac下使用xampp的Acccess forbidden错误
 cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
-categories:
-- linux
+categories: linux
+tags: mac xampp
 ---
 
 万事开头难，安装完xampp后，一直如下报错：
@@ -25,7 +24,7 @@ Apache/2.4.17 (Unix) OpenSSL/1.0.1i PHP/5.6.15 mod_perl/2.0.8-dev Perl/v5.16.3
 
 第一步，配置本地hosts
 
-```sh
+```shell
 sudo vi /etc/hosts
 ```
 
@@ -33,14 +32,13 @@ sudo vi /etc/hosts
 
 ```vim
 127.0.0.1    wanshicheng.org
-
 ```
 
 第二步 启用apache的虚拟主机功能
 
 打开配置文件
 
-```sh
+```shell
 vi /Applications/XAMPP/xamppfiles/etc/httpd.conf
 ```
 
@@ -54,7 +52,7 @@ vi /Applications/XAMPP/xamppfiles/etc/httpd.conf
 
 首先打开配置文件
 
-```sh
+```shell
 vi /Applications/XAMPP/etc/extra/httpd-vhosts.conf
 ```
 
@@ -64,7 +62,7 @@ vi /Applications/XAMPP/etc/extra/httpd-vhosts.conf
 
 默认虚拟主机
 
-```default
+```vim
 # localhost
 <VirtualHost *:80>
     ServerName localhost

@@ -1,10 +1,11 @@
 ---
 layout: post
+author: 万仕诚
 title: 'LaTeX快速指南（一）'
 subtitle: '安装LaTeX'
 date: 2017-11-17
-categories: LaTeX
 cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
+categories: latex
 tags: LaTeX 排版 设计
 ---
 
@@ -21,13 +22,13 @@ TeX Live下载地址：[http://tug.org/texlive/acquire-iso.html](http://tug.org/
 
 安装完毕后，为了测试是否正确安装，可以在CMD中（Linux用户当然用终端啦！）输入：
 
-```powershell
+```bash
 tex -v
 ```
 
 在CMD中会显示一些信息：
 
-```powershell
+```bash
 TeX 3.14159265 (TeX Live 2017/W32TeX)
 kpathsea version 6.2.3
 Copyright 2017 D.E. Knuth.
@@ -59,13 +60,13 @@ Hello, \LaTex.
 
 在CMD中输入:
 
-```powershell
+```bash
 latex hello.tex
 ```
 
 就会得到一个名为hello.dvi的中间文件。然后再在CMD中输入：
 
-```powershell
+```bash
 pdflatex hello.dvi
 ```
 

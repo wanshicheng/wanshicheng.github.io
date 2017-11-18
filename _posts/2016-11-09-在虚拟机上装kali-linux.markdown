@@ -4,7 +4,7 @@ date: 2016-11-09
 layout: post
 title: 在虚拟机上装Kali Linux
 cover: 'http://file.wanshicheng.org/wp-content/uploads/2016/11/Kali-Linux-1024x578.png'
-categories: Linux
+categories: linux
 tags: Linux Kali Debian
 ---
 
