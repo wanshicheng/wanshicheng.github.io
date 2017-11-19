@@ -2,7 +2,6 @@
 layout: post
 author: 万仕诚
 title: '铁路图详解'
-subtitle: 'LaTex的结构'
 date: 2015-10-12
 cover: 'http://file.wanshicheng.org/assets/img/js.jpg'
 categories: javascript
@@ -31,28 +30,28 @@ tags: javascript 铁路图 语法图
 
 则语法如下：
 
-1. 空。
+1、空。
 
-2. 从name和=之间绕行。
+2、从name和=之间绕行。
 
 ```javascript
 var name;
 ```
 
-3. 中间横向语句。
+3、中间横向语句。
 
 ```javascript
 var name = expression;
 ```
 
-4. 在expression和;之间循环。
+4、在expression和;之间循环。
 
 ```javascript
 var name, name,...,name;
 var name = expression, name = expression,..., name = expression;
 ```
 
-5. 在分号之后循环。
+5、在分号之后循环。
 
 ```javascript
 var name = expression;
