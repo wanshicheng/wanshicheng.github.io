@@ -2,7 +2,7 @@
 layout: post
 author: 万仕诚
 title: 'LaTeX快速指南（二）'
-subtitle: 'LaTex的结构'
+subtitle: 'LaTeX的结构'
 date: 2017-11-18
 cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
 categories: latex
@@ -29,16 +29,16 @@ LaTeX 分位导言区和正文区两个部分，两者缺一不可。导言区�
 \begin{document} % 有且只有一个document环境
 	\maketitle % 输出导言区定义的标题、作者和时间等，注意：letter没有\maketitle命令
 	空行
-	
+
 	空行
-	
+
 	不空行 % 不空行不会自动换行
 	不空行
-	
+
 	内数学公式：$f(x)=x^3$ % “$”区域内的是数学模式，区域外的一般称为文本模式，单“$”表示行内公式
-	
+
 	行间数学公式：$$f(x)=\sin \pi x$$ % 双“$”表示行间公式
-	
+
 	带编号的数学公式：\begin{equation} % 产生带编号的行间公式
 	(A+B)^2=A^2+2AB+B^2%
 	\end{equation}
@@ -68,20 +68,20 @@ texdoc ctex
 \documentclass{ctexart} % ctexbook, ctexrep
 
 \begin{document}
-	
+
 	\tableofcontents % 产生文档目录
 
 	\newpage % 分页
-	
+
 	\section{导言}
 	本书是一部简明扼要的哲学入门，是写给第一次接触哲学的读者看的。一般说来，人们上大学之后才开始学习哲学，所以我想，本书的大多数读者都应该在读大学，或者已经从大学毕业。不过年龄问题与哲学学科的本质并无关系，要是有喜欢抽象观念和理论论证的聪明高中生能读到这本书，并且也能从中享受到哲学思考的乐趣，我会非常高兴的。
-	
+
 	% 为了保证源文件的清晰，分段通常是用插入空行来实现的。
 	在系统学习关于世界的知识之前，我们的分析能力就已经高度发达了。\par 大概十四岁左右，许多人就开始以自己的方式思考哲学问题了：什么东西真的存在？
-	
+
 	% 反斜杠只是换行，并没有产生新的段落
 	本书直接介绍九个哲学问题，其中每一个都可以被独立地理解，而不必涉及思想史。\\本书不打算讨论过去伟大的哲学著作，也不讲这些著作的文化背景。
-	
+
 	\section{外部世界是否存在？}
 	\subsection{他人的意识}
 	\subsubsection{身—心问题} % 在book中subsubsection命令不起作用
@@ -90,7 +90,7 @@ texdoc ctex
 	\subsection{词语的意义}
 	\subsubsection{自由意志}
 	\subsection{对与错}
-	
+
 \end{document}
 ```
 
@@ -127,20 +127,20 @@ texdoc ctex
 }
 
 \begin{document}
-	
+
 	\tableofcontents % 产生文档目录
 
 	\newpage % 分页
-	
+
 	\section{导言}
 	本书是一部简明扼要的哲学入门，是写给第一次接触哲学的读者看的。一般说来，人们上大学之后才开始学习哲学，所以我想，本书的大多数读者都应该在读大学，或者已经从大学毕业。不过年龄问题与哲学学科的本质并无关系，要是有喜欢抽象观念和理论论证的聪明高中生能读到这本书，并且也能从中享受到哲学思考的乐趣，我会非常高兴的。
-	
+
 	% 为了保证源文件的清晰，分段通常是用插入空行来实现的。
 	在系统学习关于世界的知识之前，我们的分析能力就已经高度发达了。\par 大概十四岁左右，许多人就开始以自己的方式思考哲学问题了：什么东西真的存在？
-	
+
 	% 反斜杠只是换行，并没有产生新的段落
 	本书直接介绍九个哲学问题，其中每一个都可以被独立地理解，而不必涉及思想史。\\本书不打算讨论过去伟大的哲学著作，也不讲这些著作的文化背景。
-	
+
 	\section{外部世界是否存在？}
 	\subsection{他人的意识}
 	\subsubsection{身—心问题} % 在book中subsubsection命令不起作用
@@ -148,7 +148,7 @@ texdoc ctex
 	\subsection{词语的意义}
 	\subsubsection{自由意志}
 	\subsection{对与错}
-	
+
 \end{document}
 ```
 
@@ -156,3 +156,22 @@ texdoc ctex
 
 使用 \usepackage{hyperref} 命令可以让生成的文章目录有链接，点击时会自动跳转到该章节。而且也会使得生成的pdf 文件带有目录书签。同时还需要使用 \hypersetup{hidelinks}
 命令，消除在带链接目录中出现的红框。
+
+## 参考文献
+
+我们对于简单参考文献的的需求是：一次管理，一次使用。LaTeX正好完美地达到了这个目标。
+
+首先我们要将参考文献编译工具这只为 Biber。一般我们将参考文献单独放在一个以 .bib 为扩展名的文件中。在本例中，新建一个名为 test.bib 文件。
+
+```latex
+@BOOK{mittelbach2004,
+title = {The {{\LaTeX}} Companion},
+publisher = {Addison-Wesley},
+year = {2004},
+author = {Frank Mittelbach and Michel Goosens},
+series = {Tools and Techniques for Computer Typesetting},
+address = {Boston},
+edition = {Second}
+}
+```
+[百度学术](http://xueshu.baidu.com/)和[Google Scholar](https://scholar.google.com/)等网站都提供了对LaTeX的支持。

@@ -7,12 +7,15 @@ url: 'http://wanshicheng.org' # your host
 # if you don't need baseurl, you should leave this value blank.
 baseurl: ''
 
+# customize url 自定义目录
+permalink: /:categories/:title.html
+
 # Navigation links
 nav:
   home: '/'
   tags: '/tags/'
   links: '/links/'
- 
+
 # Author 配置博主信息
 author: '万仕诚'
 nickname: '誠者为皇'
@@ -71,7 +74,7 @@ kramdown:
 RSS: true
 
 # Plugins
-plugins: 
+plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
