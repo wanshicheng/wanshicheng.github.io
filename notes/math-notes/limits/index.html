@@ -1,0 +1,34 @@
+---
+layout: one-dark
+title: limits
+description: 极限
+---
+<p>1.求：</p>
+<span class="math"><script type="math/tex; mode=display">\lim_{x\to\infty}[2-x\ln(1+\frac{1}{x})]^x
+</script></span>
+<p>解：</p>
+<span class="math"><script type="math/tex; mode=display">\begin{equation}
+    \lim_{x\to\infty}[2-x\ln(1+\frac{1}{x})]^x
+    \overset{令t=\frac{1}{x}}{=}
+    \lim_{t\to 0}[2-\frac{1}{t}\ln(1+t)]^\frac{1}{t}
+    =
+    e^{\lim_{t\to 0}
+      {\frac{1}{t}}\ln[2-\frac{\ln{1+t}}{t}]},
+\end{equation}
+</script></span>
+<p>而</p>
+<span class="math"><script type="math/tex; mode=display">\lim_{t\to 0}\frac{\ln[2-\frac{\ln(1+t)}{t}]}{t}
+\overset{洛必达法则}{=}
+\lim_{t\to 0}\frac{-\frac{t-(1+t)\ln(1+t)}{t^2(1+t)}}{2-\frac{\ln(1+t)}{t}}
+=
+\lim_{t\to 0}\frac{(1+t)\ln(1+t)-t}{t^2}
+=
+\lim_{t\to 0}\frac{1+\ln(1+t)-1}{2t}
+=
+\frac{1}{2}
+</script></span>
+<p>所以</p>
+<span class="math"><script type="math/tex; mode=display">\lim_{x\to \infty}[2-x\ln(x+\frac{1}{2})]^x
+=
+e^\frac{1}{2}
+</script></span>

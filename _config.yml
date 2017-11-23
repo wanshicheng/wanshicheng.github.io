@@ -15,6 +15,7 @@ nav:
   home: '/'
   tags: '/tags/'
   links: '/links/'
+  notes: '/notes/'
 
 # Author 配置博主信息
 author: '万仕诚'

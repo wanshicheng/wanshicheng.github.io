@@ -1,0 +1,193 @@
+---
+layout: post
+author: 万仕诚
+title: 'LaTeX快速指南（四）'
+subtitle: '数学公式'
+date: 2017-11-20
+cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
+categories: latex
+tags: latex 排版 设计
+---
+\\(\LaTeX \\) 将排版内容分为模式和数学模式。文本模式用于普通文本排版,
+数学模式用于数学公式排版。这一章内容比较多，我尽可能使用简练的语言描述，并且兼顾实用性。
+
+在markdown中也可以使用 LaTeX 编辑数学公式，但是需根据不同的渲染器做出微小的调整。
+## 行内公式
+在两个“$”符号之间的是行内数学模式。
+```latex
+交换律是 $a+b=b+a$，如 $1+2=2+1=3$。
+```
+也可以使用小括号划分行内数学模式区域。
+```latex
+交换律是 \(a+b=b+a\)，如 \(1+2=2+1=3\)。
+```
+还可以使用math环境划分行内数学模式区域。
+```latex
+交换律是 \begin{math}a+b=b+a\end{math}，如 \begin{math}1+2=2+1=3\end{math}。
+```
+交换律是 \\(a+b=b+a\\)，如 \\(1+2=2+1=3\\)。
+
+为了方便一般都使用“$”符号。
+
+## 分式
+分式有横式和竖式两种表示方式：
+```latex
+$3/4$ $\frac{3}{4}$
+```
+\\(3/4\\) \\(\frac{3}{4}\\)
+
+## 上下标
+### 上标
+可以是简单的数字：
+```latex
+$2^{10}=1024$
+```
+\\(2^{10}=1024\\)
+
+也可以是复杂的式子：
+```latex
+$y=2^{ax+1}$
+```
+\\(y=2^{ax+1}\\)
+### 下标
+比如一段奇数列：
+```latex
+$n_1 \cdots n_{2i-1} \cdots n_{11}$
+```
+\\(n_1 \cdots n_{2i-1} \cdots n_{11}\\)
+## 希腊字母
+数学公式里肯定少不了希腊字母，运用前面所学的表格，可以绘制一个希腊字母表：
+```latex
+\begin{tabular}{|lcc|lcc|}
+		\hline
+		命令 & 大写 & 小写 & 命令 & 大写 & 小写 \\
+		\hline
+		alpha & $A$ & $\alpha$ &  beta & $B$ &$\beta$  \\
+		gamma & $\Gamma$ & $\gamma$  &  delta & $\Delta$ & $\delta$ \\
+		epsilon & $E$ & $\epsilon,\varepsilon$ &  zeta & $Z$ & $\zeta$ \\
+		eta & $H$ &$\eta$  &  theta & $\Theta$ & $\theta,\vartheta$ \\
+		iota & $I$ & $\iota$ &   kappa & $K$ & $\kappa$ \\
+		lambda & $\Lambda$ & $\lambda$  & mu & $M$ & $\mu$ \\
+		nu & $N$ & $\nu$ & omicron & $O$ & $o$ \\
+		xi & $\Xi$ & $\xi$  &   pi & $\Pi$ & $\pi,\varpi$ \\
+		rho & $P$ & $\rho,\varrho$  &  sigma & $\Sigma$ & $\sigma,\varsigma$ \\
+		tau & $T$ & $\tau$ &   upsilon & $\Upsilon$ & $\upsilon$ \\
+		phi & $\Phi$ & $\phi,\varphi$ &  chi & $X$ & $\chi$ \\
+		psi & $\Psi$ & $\psi$  &  omega & $\Omega$ &$\omega$ \\
+		\hline
+\end{tabular} % 注意有些字母的区别
+```
+$$
+\begin{array}{|lcc|lcc|}
+		\hline
+		命令 & 大写 & 小写 & 命令 & 大写 & 小写 \\
+		\hline
+		alpha & A & \alpha &  beta & B &\beta  \\
+		gamma & \Gamma & \gamma  &  delta & \Delta & \delta \\
+		epsilon & E & \epsilon,\varepsilon &  zeta & Z & \zeta \\
+		eta & H &\eta  &  theta & \Theta & \theta,\vartheta \\
+		iota & I & \iota &   kappa & K & \kappa \\
+		lambda & \Lambda & \lambda  & mu & M & \mu \\
+		nu & N & \nu & omicron & O & o \\
+		xi & \Xi & \xi  &   pi & \Pi & \pi,\varpi \\
+		rho & P & \rho,\varrho  &  sigma & \Sigma & \sigma,\varsigma \\
+		tau & T & \tau &   upsilon & \Upsilon & \upsilon \\
+		phi & \Phi & \phi,\varphi &  chi & X & \chi \\
+		psi & \Psi & \psi  &  omega & \Omega &\omega \\
+		\hline
+\end{array}
+$$
+## 数学符号
+### 简单符号
+一些简单的数学符号加上“\”即可：
+```latex
+$\sqrt{3}$
+
+$\sqrt[3]{4}$
+
+$\log_10 100=2$
+
+$\sin\pi=0$
+
+$f(x)=\sqrt{\frac{x+1}{x-1}}$
+```
+\\(\sqrt{3}\\)
+
+\\(\sqrt[3]{4}\\)
+
+\\(\log_{10} 100=2\\)
+
+\\(\sin\pi=0\\)
+
+\\(f(x)=\sqrt{\frac{x+1}{x-1}}\\)
+
+### e、d和i
+自然对数的底e，微分符号d，虚数单位i，规范是都用正体！
+```latex
+$\mathrm{e}$
+$\mathrm{d}$
+$\mathrm{i}$
+```
+\\(\mathrm{e}\\) \\(\mathrm{d}\\) \\(\mathrm{i}\\)
+
+### 求和、极限和积分
+首先，需要知道的是，求和、积分符号出现位置可能为上下，也可能是左右。在数学公式中，符号出现的位置取决于是行内公式还是行间公式。
+
+如下所示为左右位置，行内公式情形：
+```latex
+\begin{math}
+p = \sum_{n=1}^Na_n
+\end{math}
+```
+\\(
+p = \sum_{n=1}^Na_n
+\\)
+
+通过 \limits 与 \nolimits 可以改变缺省值。其中行内公式缺省使用 \nolimits 而行间公式缺省使用\limits。如果要改变缺省规则，就要在符号后面、上下限之前加入上面的两个命令。如在行内公式上加 \limits:
+```latex
+\begin{math}
+p = \sum\limits_{n=1}^Na_n
+\end{math}
+```
+\\(
+p = \sum\limits_{n=1}^Na_n
+\\)
+行间公式缺省情况：
+```latex
+\begin{equation*}
+p = \sum_{n=1}^Na_n
+\end{equation*}
+```
+$$
+p = \sum\limits_{n=1}^Na_n
+$$
+
+加上 \nolimits：
+```latex
+\begin{equation*}
+p = \sum\nolimits_{n=1}^Na_n
+\end{equation*}
+```
+$$
+p = \sum_{n=1}^Na_n
+$$
+
+下面是极限和积分的默认情况：
+```latex
+\begin{math}
+\lim_{x\to 0}f(x)
+\end{math}
+
+\begin{math}
+\int_{b}^{a}f(x)\mathrm{d}x
+\end{math}
+```
+\\(\lim_{x\to 0}\\)
+
+\\(\int_{b}^{a}f(x)\mathrm{d}x\\)
+
+使用 \substack，能够在下限位置书写多行表达式。
+```latex
+$\iint\limits_{\substack{0<x<1 \\ 1<y<2}}f(x,y)dxdy$
+```
+\\(\iint\limits_{\substack{0<x<1 \\\\ 1<y<2}}f(x,y)dxdy\\)
