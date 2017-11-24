@@ -1,7 +1,7 @@
 # Site settings 配置站点
 title: '万仕诚的博客'
-description: '万仕诚的博客，关注数学，Java，Python等'
-keyword: '万仕诚,数学,python,java,linux,kali'
+description: '万仕诚的个人博客，研究互联网产品和人工智能技术，提供原创中文精品教程。'
+keyword: '万仕诚,个人博客,独立博客,阳光宅男,人工智能,机器学习,机器学习数学基础,人工智能数学基础,ai,latex入门,python爬虫,java,kali linux,'
 url: 'http://wanshicheng.org' # your host
 
 # if you don't need baseurl, you should leave this value blank.
