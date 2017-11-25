@@ -191,3 +191,38 @@ $$
 $\iint\limits_{\substack{0<x<1 \\ 1<y<2}}f(x,y)dxdy$
 ```
 \\(\iint\limits_{\substack{0<x<1 \\\\ 1<y<2}}f(x,y)dxdy\\)
+
+## 行间公式
+用“$$”包裹起来的是行间公式。
+### 矩阵
+```latex
+\begin{gather*}
+\begin{matrix} 0 & 1 \\ 1 & 0 \end{matrix}\quad
+\begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}
+\begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}\quad
+\begin{Bmatrix} 1 & 0 \\ 0 & -1 \end{Bmatrix}
+\begin{vmatrix} a & b \\ c & d \end{vmatrix}\quad
+\begin{Vmatrix} i & 0 \\ 0 & -i \end{Vmatrix}
+\end{gather*}
+```
+$$
+\begin{matrix} 0 & 1 \\ 1 & 0 \end{matrix}\quad
+\begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}
+\begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}\quad
+\begin{Bmatrix} 1 & 0 \\ 0 & -1 \end{Bmatrix}
+\begin{vmatrix} a & b \\ c & d \end{vmatrix}\quad
+\begin{Vmatrix} i & 0 \\ 0 & -i \end{Vmatrix}
+$$
+
+## 其它符号总结
+因为和所以
+```latex
+$\because \therefore$
+```
+\\(\because \therefore\\)
+
+属于和不属于
+```latex
+$\in \notin$
+```
+\\(\in \notin\\)
