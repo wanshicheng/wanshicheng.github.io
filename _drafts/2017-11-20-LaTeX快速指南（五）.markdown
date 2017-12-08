@@ -1,13 +1,227 @@
 ---
 layout: post
 author: 万仕诚
-title: 'LaTeX快速指南（五）'
-subtitle: '布局'
+title: 'LaTeX快速指南（三）'
+subtitle: 'LaTeX的润色'
 date: 2017-11-20
 cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
 categories: latex
 tags: latex 排版 设计
 ---
-这一章主要介绍盒子与浮动体。
 
-## 盒子
+最近发现 LaTeX 自带了一份中文快速入门文档，你可以在CMD中输入：
+
+```bash
+texdoc lshort-zh
+```
+
+就可以打开《一份不太简短的 \\( \LaTeX \\) 2ε 介绍》的文档，据说只要102分钟就可以入门。《一份不太简短的 L ATEX 2ε 介绍》将每个功能点都分了类别，我觉得分类的文档适合作为参考，要想入门，还是得先过一边流程。因此，我这个教程还是很有必要的。
+
+## 文字
+
+文字是排版的基础。用 LaTeX 排版中文的一大难题是中文字体的处理，xeCJK 宏包支持用简单的命令配置中文字体，ctex 宏包和文档类是对 CJK 和 xeCJK 等宏包的进一步封装。 ctex 文档类包括 ctexart、ctexrep、ctexbook，是对 L ATEX 的三个标准文档类的封装，对 LaTeX 的排版样式做了许多调整，以切合中文排版风格。
+
+```latex
+\documentclass{article}
+
+\usepackage[10pt]{ctex} % []中设置normal size大小,一般只有10、11、12pt
+% 定义新的命令
+\newcommand{\myfont}{\textit{\textbf{\textsf{This is my font.}}}}
+
+\begin{document}%有且只有document环境
+
+  % 命令
+	% 字体族设置（罗马字体、无称线字体、打字机字体）
+	\textrm{Roman Family} \textsf{Sans Serif Family} \texttt{Typewriter Family}
+
+	%声明
+	{\rmfamily Roman Family} {\sffamily Sans Serif Family} {\ttfamily Typewriter Family} % 用“{}”进行分组
+
+	\rmfamily LaTeX is a high-quality typesetting system; it includes features designed for the production of technical and scientific documentation.
+
+	LaTeX is a high-quality typesetting system; it includes features designed for the production of technical and scientific documentation.
+
+	\ttfamily LaTeX is a high-quality typesetting system; it includes features designed for the production of technical and scientific documentation.
+
+	% 字体系列设置
+	\textmd{Medium Series} \textbf{Boldface Series}
+
+	{\mdseries Medium Series} {\bfseries Boldface Series}
+	% 字体形状设置
+	{\upshape Upright Shape} {\itshape Italic Shape} {\slshape Slanted Shape} {\scshape Small Caps Shape}
+
+	%中文字体设置
+	{\songti 宋体} \quad {\heiti 黑体} \quad {\fangsong 仿宋} \quad {\kaishu 楷书} \textbf{粗体} \textit{斜体}  %粗体——黑体 斜体——楷书
+
+	% 字体大小
+	{\tiny Hello} \\
+	{\scriptsize Hello} \\
+	{\footnotesize Hello} \\
+	{\small Hello} \\
+	{\normalsize Hello} \\
+	{\large Hello} \\
+	{\Large Hello} \\
+	{\LARGE Hello} \\
+	{\huge Hello} \\
+	{\Huge Hello} \\
+
+	%中文字号设置命令
+	\zihao{-0} 你好！% 参数“-0”表示小初号
+	\zihao{5} 你好！% 参数“5”表示5号
+
+	\myfont
+
+\end{document}
+```
+
+在上面的例子中，使用 \newcommand 来定义一个新的命令。可以理解为多个命令组合而成一个新的新的命令。在后面的数学公式中，我们也会用到，可以对比参考学习。
+
+## 符号
+
+符号也是一篇文章必不可少的部分，这里仅举例一些常用符号作为参考。
+
+```latex
+\documentclass{article}
+
+\usepackage{ctex}
+\usepackage{xltxtra} %提供了对XeTeX的改进并且加入了XeTeX的LOGO
+
+\begin{document}
+	\section{空白符号}
+	%空行分段，多个空行等于一个
+	%自动缩进，绝不能使用空格替代
+	%英文中多个空格处理为一个空格，中文中空格将被忽略
+	%汉字与其它字符的间距会自动由XeLaTeX处理
+	%禁止使用中文全角空格
+	LaTeX is a            high-quality typesetting system; it includes features designed for the production of technical and scientific documentation.
+
+	LaTeX是               当今世界上最流行和使用最为广泛的TeX宏集。它构筑在Plain TeX的基础之上，并加进了很多的功能以使得使用者可以更为方便的利用TeX的强大功能。
+
+	% 1em（当前字体中M的宽度）
+	a\quad b
+
+	% 2em
+	a\qquad b
+
+	% 约为1/6em
+	a\, b a\thinspace b
+
+	% 0.5em
+	a\enspace b
+
+	% 空格
+	a\ b
+
+	% 硬空格,不可分割的空格
+	a~b
+
+	%1pc=12pt=4.218mm
+	a\kern 1pc b
+
+	a\kern -1em b %也可以使用负值
+
+	a\hskip 1cm b
+
+	a\hspace{35pt}b
+
+	%占位宽度
+	a\hphantom{xyz}b
+
+	%弹性长度，充满整个空间
+	a\hfill b
+
+	\section{\LaTeX 控制符}%用反斜杠可以输出这些控制符
+	\# \$ \% \{ \} \_[] \^[] \textbackslash \&
+	\section{排版符号}
+	\S \P \dag \ddag \copyright \pounds
+
+	\section{\TeX 标志符号}
+	%基本符号
+	\TeX{} \LaTeX{} \LaTeXe{}
+
+	\XeLaTeX %必须使用\usepackage{xltxtra}命令引入宏包
+
+	\section{引号}%在LaTeX中引号有左右之分
+	`%撇号，数字1左边，表示左单引号
+	'%enter旁边，表示右单引号
+	``%连续两个撇号，左双引号，
+	''%连续两个单引号，表示右双引号
+
+	\section{连字符}
+	- -- ---%减号
+
+	\section{非英文字符}
+	\oe \OE \ae \AE \aa \AA \o \O \l \L
+	\ss \SS !` ?`
+
+	\section{重音符号{以a为例}}
+	\`a \'a \^a \''a \~a \=a \.a \u{a} \v{a} \H{a} \r{a} \t{a} \b{a} \c{a} \d{a}
+\end{document}
+```
+
+## 表格
+
+LaTeX 里排版表格不如 Word 等所见即所得的工具简便和自由，不过对于不太复杂的表格来
+讲，完全能够胜任。
+
+```latex
+\documentclass{ctexart}
+
+\begin{document}
+	% “l”左对齐，“c”居中对齐，“r”右对齐
+	% “p”指定宽度，内容超过宽度自动换行
+	\begin{tabular}{lcccp{1.2cm}}
+		% 不同列间用“&”符号分割，用“\\”结束本行，并产生新的一行
+		姓名 & 语文 & 数学 & 外语 & 备注 \\
+		张三 & 88 & 90 & 92 & 特别优秀 \\
+		张三 & 88 & 90 & 92 & 优秀 \\
+	\end{tabular}
+
+	\begin{tabular}{|l||c|c|c|p{1.2cm}|} % “|”表格竖线,"||"表格双竖线
+		% “p”指定宽度，并自动换行
+		\hline %表格竖线
+		姓名 & 语文 & 数学 & 外语 & 备注 \\
+		\hline % 表格竖线
+		张三 & 88 & 90 & 92 & 特别优秀 \\
+		\hline \hline % 表格双竖线
+		张三 & 88 & 90 & 92 & 优秀 \\
+		\hline
+	\end{tabular}
+
+\end{document}
+```
+读者可以输入下列命令，查找对应的表格参考文档。
+
+| 命令           | 参考文档     |
+|:--------------:|:-----------:|
+| texdoc booktab | 三线表格     |
+| texdoc longtab | 跨页长表格   |
+| texdoc tabu    | 综合表格宏包 |
+
+## 图片
+
+LaTeX 本身不支持插图功能，需要由 graphicx 宏包辅助支持。
+
+```latex
+\documentclass{ctexart}
+
+\usepackage{graphicx} % 插入图片需要引入该宏包
+\graphicspath{{ "{{" | escape }}assets/}, {{ "{" | escape }}img/}} % 图片在当前目录下的assets目录,可以添加多个路径
+
+\begin{document}
+	\LaTeX 中的插图 \\
+	% 语法：\includegraphics[<选项>]{<文件名>}
+	% 格式：EPS,PDF,PNG,JPEG,BMP
+	\includegraphics{latex-project-logo} % 文件后缀名，可以加也可以不加。似乎对PNG格式的支持不太好。
+	\\
+	\includegraphics{macbook-1.jpg} % 插图太大，无法正常排版
+	\\
+	\includegraphics[scale=0.2]{macbook-2.jpg} % 原始比例的0.3倍
+	\\
+	\includegraphics[height=0.2\textheight]{macbook-2.jpg} % 版型高度0.2倍的图像高度
+	\\
+	\includegraphics[width=0.2\textwidth]{macbook-2.jpg} % 版型宽度0.2倍的图像宽度
+	\\
+	\includegraphics[angle=45, width=0.2\textwidth]{macbook-2.jpg} % 可以使用多个参数
+\end{document}
+```

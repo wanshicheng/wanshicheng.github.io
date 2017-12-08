@@ -1,0 +1,49 @@
+---
+layout: post
+author: 万仕诚
+title: '用 GeoGebra 发现数学'
+subtitle: '具有函数、几何、代数、微积分、统计学和3D数学功能的图形计算神器!'
+date: 2017-11-28
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
+categories: geogebra
+tags: geogebra 函数 函数图形
+---
+## 探索
+最近一直在将自己的笔记电子化，遇到一个问题：怎么画函数图呢？
+
+尤其是下面这张图：
+
+![](http://file.wanshicheng.org/assets/img/geogebra01.jpg)
+
+积分区域的阴影部分是一个不规则图形。
+
+脑子第一个闪现的是Photoshop，然后很快被我否决了，这样画函数图不仅复杂，而且特别不精确。
+
+然后我就想到了 Python 和 Matlab，Python 的 Matplotlib 提供了与 Matlab 几乎一样的功能。紧接着我就开始学习 Python 的数据可视化。对于一些规则图形，甚至是隐函数的图形，Python 和 Matplotlib 都可以胜任。可是对于一些不规则的图形，我想只要数学足够好，也能写出公式生成图形吧！果断半途而废。
+
+过了几天，我想到了“几何画板”。这是一个收费软件，我从官网下载了正版，试用时间有20分钟。这个软件的界面真的很丑，当然，绘图软件比起程序语言，自带了很多工具，果然方便许多。用了一会儿，我还是没法画出我想要的那个积分区域。虽然有一个几何画板的官方论坛，但是似乎已经废弃。
+
+写 LaTeX 教程的时候，发现 LaTex 也可以绘图。有好几个宏包具有丰富的绘图功能，我就选择了TikZ。开源软件软件在网上一搜就有很多教程，而且官方文档也很详细，但是 LaTeX 排版本来就已经很复杂了，再用它绘图，简直绝望了。文档太厚，不想看。在 LaTeX 的世界里，模仿别人也是需要技术的。此路又行不通。
+
+后来在知乎的角落里，发现了 GeoGebra 这个神器！那哥们就写了个软件的名字，一行文字谁会在意。想想我都与神器错过了好几次。
+
+## GeoGebra 简介
+GeoGebra 是一款开源、免费、跨平台的具有函数、几何、代数、微积分、统计学和3D数学功能的图形计算器!
+
+它的跨平台能力比 Java 都强，支持 Windows、macOS、Linux、Chrome、iOS、Android、WindowsPhone，甚至还有网页版。
+
+当我第一次打开这个软件，我以为它仅仅是一个玩具，因为它太简洁了！
+
+![](http://file.wanshicheng.org/assets/img/geogebra02.jpg)
+
+点开主菜单，我发现它可以到处为 PSTricks 和 PGF/TikZ 格式，这不就意着给 LaTeX 也找到了一个绘图工具么！
+
+![](http://file.wanshicheng.org/assets/img/geogebra03.jpg)
+
+GeoGebra 还提供丰富的绘图工具，相比于几何画板的工具，它更直观，快捷，提示功能也很强。同时，它还拥有自己的脚本语言，可以制作复杂的动画。
+
+![](http://file.wanshicheng.org/assets/img/geogebra.gif)
+
+它还具有云管理系统，我将我做好的制作成一个课件（[查看课件](https://ggbm.at/AuyYr3qs)）上传到云端。这对于入门者来说是非常重要的,资源共享等弥补了几何画板的不足。你也可以不用下载软件，只在[网页](https://www.geogebra.org/graphing)上进行绘图。
+
+就安利到这里，GeoGebra 还有更多强大的功能等着你去发现！
