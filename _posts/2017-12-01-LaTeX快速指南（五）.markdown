@@ -1,0 +1,53 @@
+---
+layout: post
+author: 万仕诚
+title: 'LaTeX快速指南（五）'
+subtitle: '符号参考'
+date: 2017-12-02
+cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
+categories: latex
+tags: latex 排版 设计
+---
+这一页将会不定期更新常用的 \\(\LaTeX \\) 符号。
+## 箭头
+$$
+\begin{array}{|c|c|c|c|}
+\hline
+命令 & 显示效果 & 命令 & 显示效果 \\
+\hline
+\text{\uparrow} & \uparrow & \text{\upharpoonleft} & \upharpoonleft \\
+\text{downarrow} & \downarrow & \text{\downharpoonleft}	& \downharpoonleft\\
+\text{\Uparrow} & \Uparrow & \text{\upharpoonright}	& \upharpoonright\\
+\text{\Downarrow} & \Downarrow & \text{\downharpoonright} & \downharpoonright\\
+\text{\updownarrow} & \updownarrow & \text{\upuparrows}	& \upuparrows\\
+\text{\Updownarrow} & \Updownarrow & \text{\downdownarrows}	& \downdownarrows \\
+\text{\rightarrow} & \rightarrow & \text{\leadsto} & \leadsto\\
+\text{\leftarrow} & \leftarrow & \text{\Lsh}	& \Lsh\\
+\text{\nrightarrow} & \nrightarrow & \text{\Rsh}	& \Rsh\\
+\text{\nleftarrow}	& \nleftarrow & \text{\leftrightharpoons}	& \leftrightharpoons\\
+\text{\Rightarrow} & \Rightarrow & \text{\rightrightarrows} & \rightrightarrows \\
+\text{\Leftarrow} & \Leftarrow  & \text{\rightleftarrows}	& \rightleftarrows\\
+\text{\nLeftarrow}	& \nLeftarrow & \text{\leftrightarrows} & \leftrightarrows\\
+\text{\nRightarrow} & \nRightarrow  & \text{\rightleftharpoons}	& \rightleftharpoons\\
+\text{\leftrightarrow} & \leftrightarrow  & \text{\nleftrightarrow}	& \nleftrightarrow\\
+\text{\Leftrightarrow} & \Leftrightarrow  & \text{\nLeftrightarrow}	& \nLeftrightarrow\\
+\text{\longleftarrow} & \longleftarrow & longrightarrow & \longrightarrow \\
+\text{\Longrightarrow} & \Longrightarrow & \text{\rightarrowtail}	& \rightarrowtail\\
+\text{Longleftarrow} & \Longleftarrow & \text{\twoheadrightarrow}	& \twoheadrightarrow\\
+\text{longleftrightarrow} & \longleftrightarrow & \text{\looparrowright}	& \looparrowright\\
+\text{Longleftrightarrow} & \Longleftrightarrow & \text{\leftrightsquigarrow}	& \leftrightsquigarrow\\
+\text{mapsto} & \mapsto & \text{\curvearrowleft}	& \curvearrowleft\\
+\text{longmapsto} & \longmapsto & \text{\circlearrowleft} & \circlearrowleft \\
+\text{\rightleftharpoons} & \rightleftharpoons & \text{\looparrowleft}	& \looparrowleft \\
+\text{\twoheadleftarrow}	& \twoheadleftarrow & \text{\leftarrowtail}	& \leftarrowtail\\
+\text{\leftharpoonup}	& \leftharpoonup & \text{\multimap}	& \multimap\\
+\text{\rightharpoonup}	& \rightharpoonup  & \text{\hookrightarrow}	& \hookrightarrow\\
+\text{\leftharpoondown}	& \leftharpoondown  & \text{\hookleftarrow} & \hookleftarrow \\
+\text{\rightharpoondown}	& \rightharpoondown & \text{\rightsquigarrow}	& \rightsquigarrow\\
+\text{\nearrow}	& \nearrow & \text{\dashrightarrow}	& \dashrightarrow\\
+\text{\searrow}	& \searrow & \text{\dashleftarrow}	& \dashleftarrow\\
+\text{\swarrow}	& \swarrow & \text{\leftleftarrows}	& \leftleftarrows\\
+\text{\nwarrow}	& \nwarrow & \text{\Lleftarrow}	& \Lleftarrow\\
+\hline
+\end{array}
+$$
