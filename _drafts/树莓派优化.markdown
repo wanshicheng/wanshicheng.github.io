@@ -1,0 +1,12 @@
+
+```shell
+$ free -m
+              total        used        free      shared  buff/cache   available
+Mem:            976          35         226          12         714         864
+Swap:            99           0          99
+```
+
+$ sudo find / -name swap
+/var/swap
+
+在内存小于2G的情况下，交换分区应为内存的2倍!

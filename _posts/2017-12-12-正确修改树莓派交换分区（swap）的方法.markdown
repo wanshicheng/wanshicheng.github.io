@@ -1,0 +1,92 @@
+---
+layout: post
+author: 万仕诚
+title: '正确修改树莓派交换分区（swap）的方法'
+date: 2017-12-12
+cover: 'http://file.wanshicheng.org/assets/img/RaspberryPi.jpeg'
+categories: raspberrypi
+tags: raspberrypi swap 树莓派 交换分区
+---
+## 错误的做法
+## 错误的做法
+## 错误的做法
+
+重要的事情说三遍！！！
+
+一直以来，我以为树莓派的 swap 和普通 linux 的差不多，也就照着某些网站上的方法修改树莓派的交换分区大小。
+
+熟悉的套路开始了！
+
+首先，查看内存大小：
+
+```shell
+$ free -m
+              total        used        free      shared  buff/cache   available
+Mem:            976          35         226          12         714         864
+Swap:            99           0          99
+```
+
+然后：
+
+```shell
+$ sudo dd if=/dev/zero of=/swapfile bs=1024 count=102400
+$ sudo mkswap /swapfile
+$ sudo chown root:root /swapfile
+$ sudo chmod 0600 /swapfile
+$ sudo swapon /swapfile
+$ sudo vi /etc/fstab
+```
+
+接着，添加以下内容到fstab文件尾：
+
+```vim
+/swapfile swap swap defaults 0 0
+```
+查看是否有swap空间
+```shell
+$ free -m
+```
+重启后，你就会发现树莓派的 swap 又回到还原了。
+
+## 正确的做法
+
+如果你按照上面的方法做了，只需删除 swap 分区：
+
+```shell
+$ sudo swapoff /swapfile
+$ sudo rm /swapfile
+```
+
+然后将自己在 /etc/fstab 文件添加的那一行删除。
+
+下面开始正式修改树莓派的 swap 的大小：
+
+```shell
+sudo vi /etc/dphys-swapfile
+```
+将 CONF_SWAPSIZE 的值修改成你想要的大小。 一般在内存小于2G的情况下，交换分区应为内存的2倍!
+
+然后，重新启动 dphys-swapfile 文件服务：
+
+```shell
+sudo /etc/init.d/dphys-swapfile restart
+```
+
+最后查看大小：
+
+```shell
+$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:           976M         66M        801M         12M        108M        849M
+Swap:          2.0G          0B        2.0G
+```
+
+## 后记
+
+在修改 /etc/fstab 文件的时候，我在下面的注释里发现了这样的两句话：
+
+```vim
+# a swapfile is not a swap partition, no line here
+#   use  dphys-swapfile swap[on|off]  for that
+```
+不过当时并不知道 dphys-swapfile 是什么，也不知道它在哪。后来通过搜索 dphys-swapfile 查阅到这篇文章[How to change Raspberry Pi's Swapfile Size on Raspbian](http://www.bitpi.co/2015/02/11/how-to-change-raspberry-pis-swapfile-size-on-rasbian/)，终于找到了正确修改树莓派交换分区的方法。
