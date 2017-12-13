@@ -1,0 +1,58 @@
+---
+layout: post
+author: 万仕诚
+title: 'LaTeX快速指南（七）'
+subtitle: '自定义命令和环境'
+date: 2017-12-13
+cover: 'http://file.wanshicheng.org/assets/img/LaTeXCover.jpg'
+categories: latex
+tags: latex 排版 设计
+---
+自定义命令和环境是进行 \\(\LaTeX\\) 格式定制、达成内容与格式分离目标的利器。使用自定义的命令和环境把字体、字号、缩进、对齐、间距等各种琐细的内容包装起来，赋以一个有意义的名字，可以使文档结构清晰、代码整洁、易于维护。在使用宏定义的功能的时候，要综合利用各种已有的命令、环境、变量等功能，事实上，前面所介绍的长度 变量与盒子、字体字号等内容，大多并不直接出现在文档正文中，而主要都是用在各种结构化的宏定义里。
+
+```latex
+\documentclass{ctexart}
+
+% newcommand 定义命令
+\newcommand{\PRC}{People's Republic of \emph{Chinas}}
+% 参数个数可以从 1 到 9 使用时用 #1,#2,...#9 表示
+\newcommand{\love}[2]{#1 喜欢 #2}
+\newcommand{\hateby}[2]{#2 不受 #1 喜欢}
+% 指定参数个数的同时指定了首个参数的默认值，那么这个命令的
+% 第一个参数就成为可选参数（要使用中括号指定）
+\newcommand\like[3][喜欢]{#2 #1 #3}
+% renewcommand 只能用于已有的命令
+\renewcommand{\abstractname}{内容简介}
+
+\newenvironment{myabstrac}[1][摘要]
+{\small
+	\begin{center}\bfseries #1\end{center}
+	\begin{quotation}}
+	{\end{quotation}}
+\newenvironment{Quotation}[1]
+{\newcommand\quotesource{#1}\begin{quotation}}
+{\par\hfill---《\textit{\quotesource}》\end{quotation}}
+
+\begin{document}
+	\PRC
+
+	\love{猫儿}{鱼}
+
+	\hateby{萝卜}{猫儿}
+
+	\like[最爱]{猫儿}{鱼}
+
+	\begin{abstract}
+		这是一段摘要...
+	\end{abstract}
+
+	\begin{myabstrac}
+		这是一段自定义格式的摘要...
+	\end{myabstrac}
+
+	\begin{Quotation}{资本论}
+		这个铸币经过检验，重量成色完全合格，但告诉我，你钱袋里有吗？
+	\end{Quotation}
+
+\end{document}
+```
