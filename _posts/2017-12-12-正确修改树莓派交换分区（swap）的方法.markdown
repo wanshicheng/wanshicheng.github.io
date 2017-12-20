@@ -19,7 +19,7 @@ tags: raspberrypi swap 树莓派 交换分区
 
 首先，查看内存大小：
 
-```shell
+```bash
 $ free -m
               total        used        free      shared  buff/cache   available
 Mem:            976          35         226          12         714         864
@@ -28,7 +28,7 @@ Swap:            99           0          99
 
 然后：
 
-```shell
+```bash
 $ sudo dd if=/dev/zero of=/swapfile bs=1024 count=102400
 $ sudo mkswap /swapfile
 $ sudo chown root:root /swapfile
@@ -43,7 +43,7 @@ $ sudo vi /etc/fstab
 /swapfile swap swap defaults 0 0
 ```
 查看是否有swap空间
-```shell
+```bash
 $ free -m
 ```
 重启后，你就会发现树莓派的 swap 又回到还原了。
@@ -52,7 +52,7 @@ $ free -m
 
 如果你按照上面的方法做了，只需删除 swap 分区：
 
-```shell
+```bash
 $ sudo swapoff /swapfile
 $ sudo rm /swapfile
 ```
@@ -61,20 +61,20 @@ $ sudo rm /swapfile
 
 下面开始正式修改树莓派的 swap 的大小：
 
-```shell
+```bash
 sudo vi /etc/dphys-swapfile
 ```
 将 CONF_SWAPSIZE 的值修改成你想要的大小。 一般在内存小于2G的情况下，交换分区应为内存的2倍!
 
 然后，重新启动 dphys-swapfile 文件服务：
 
-```shell
+```bash
 sudo /etc/init.d/dphys-swapfile restart
 ```
 
 最后查看大小：
 
-```shell
+```bash
 $ free -h
               total        used        free      shared  buff/cache   available
 Mem:           976M         66M        801M         12M        108M        849M
