@@ -20,11 +20,18 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+        },
         jax: ["input/TeX","output/HTML-CSS"],
         extensions: [],
         TeX: {
           extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
         },
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+        showProcessingMessages: false,
+        messageStyle: "none",
         showMathMenu: false
       });
     </script>

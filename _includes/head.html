@@ -16,6 +16,26 @@
     <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
     <link rel="stylesheet" href="/assets/css/github-markdown.css">
     <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/search.css">
+    <!--  数学公式支持  -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+        },
+        jax: ["input/TeX","output/HTML-CSS"],
+        extensions: [],
+        TeX: {
+          extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+        },
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+        showProcessingMessages: false,
+        messageStyle: "none",
+        showMathMenu: false
+      });
+    </script>
     <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];

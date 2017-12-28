@@ -1,0 +1,43 @@
+---
+layout: post
+author: 万仕诚
+title: 'macOS装回Java8'
+date: 2017-12-11
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
+categories: java
+tags: java homebrew macOS
+---
+2017年9月21日,千呼万唤始出来,Java 9 终于发布了。但是它对一些旧版本软件的支持似乎不好。比如我正在使用的 Hbase 1.2.6，使用 Java 9 后就无法打开 hbase shell 了。
+
+于是就采用最直接最简单的 Homebrew 安装法：
+```shell
+brew cask install java8
+```
+然后就报错了：
+```shell
+Error: No available formula with the name "java8"
+```
+去掉8，现在默认安装的是 java 9.0.1。难道只能去下载 Java 8 的安装包，手动配置环境变量么？
+
+不，原来 Homebrew 需要安装 versions 才能安装指定版本软件：
+
+```shell
+brew tap caskroom/versions
+brew cask install java8
+```
+ 这样 java 8 就轻松安装好了。
+
+ 通过
+ ```shell
+brew cask search java
+ ```
+还可以查找 java 的其它版本：
+```shell
+==> Exact Match
+java
+==> Partial Matches
+charles-applejava          java6                      netbeans-java-se
+eclipse-java               java8                      yourkit-java-profiler
+java-jdk-javadoc           netbeans-java-ee
+```
+很奇怪，没有 java 7，不过目前也用不上，就不深究了。

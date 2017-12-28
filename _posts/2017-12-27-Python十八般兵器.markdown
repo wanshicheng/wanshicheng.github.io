@@ -1,0 +1,260 @@
+---
+layout: post
+author: 万仕诚
+title: 'Python十八般兵器'
+date: 2017-12-27
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
+categories: python
+tags: python 
+---
+最初只是想了解 Python 几个包管理工具之间的异同，后来发现水越来越深，Python 的各种工具五花八门。许多工具的功能相互交织，又各有不同。网上没有一篇全面这些工具的文章，这里，我把所了解的工具逐一介绍一下，并做出简单的对比。
+
+# 包管理
+## PyPA
+PyPA 是 Python 包管理机构（Python Packaging Authority），它是一个维护了许多项目中 Python 包的工作组。他们的项目托管在 [github](https://github.com/pypa) 和 [bitbucket](https://bitbucket.org/pypa/)上，并讨论 [pypa-dev](https://groups.google.com/forum/#!forum/pypa-dev) 和 [distutils-sig](https://mail.python.org/mailman/listinfo/distutils-sig) 邮件列表中的问题。
+
+## PyPI
+PyPI 是 Python 社区默认的包索引。它对所有 Python 开发人员开放，让其使用或发布他们的发行版本。
+
+## pip 和 easy_install 对比
+easy_install 作为 [setuptools](https://packaging.python.org/key_projects/#setuptools) 的一部分在2004年发布。值得注意的是，使用需求指定安装 PyPI 中的包，会自动安装依赖。
+
+pip 是2008年晚些时候到来的，作为对 easy_install 的替代，尽管仍然很大程度上是建立在 setuptools 组件之上的。并引入了需求文件的概念，这使用户能够轻松地复制环境。
+
+
+以下是 pip 和 easy_install 之间的重要区别:
+
+| | pip | easy_install |
+|:-|:-|:-|
+| 从 Wheel 中安装 | 是 | 否         |
+| 卸载包 | 是（pip uninstall）| 否 |
+| 依赖覆盖 | 是（[Requirements Files](https://pip.pypa.io/en/latest/user_guide/#requirements-files)） | 否 |
+| 列出已安装包    | 是（pip list and pip freeze）| 否 |
+| 支持 [PEP 438] | 是 | 否 |
+| 安装格式 | “扁平的”egg-info 元数据包 | 封装后的 egg 格式 |   
+| 修改 sys.path | 否 | 是 |
+| 从 Egg 中安装 | 否 | 是 |
+| 支持 pylauncher | 否 | 是 [注](https://setuptools.readthedocs.io/en/latest/easy_install.html#natural-script-launcher) | 
+| 多个版本安装 | 否 | 是 |
+| 安装时使用排除脚本 | 否 | 是 |
+| 每个项目索引 | 只在 virtualenv 中 | 是，通过 setup.cfg |
+
+## install_requires 和 Requirements files 对比
+### install_requires
+
+
+### Requirements files
+
+
+## Wheel 和 Egg 对比
+
+## distutils
+distutils是Python标准库的一部分，其初衷是为开发者提供一种方便的打包方式， 同时为使用者提供方便的安装方式。
+
+例如你创建了一个名为foo的包，包含一个foo.py文件，你想把它打包以便其它人使用。 这时候你需要写一个setup.py文件：
+```python
+from distutils.core import setup
+setup(name='foo',
+      version='1.0',
+      py_modules=['foo'],
+      )
+```
+然后运行命令
+```bash
+python setup.py sdist
+```
+然后你发现当前目录下出现一个名为dist的文件夹，里面有一个foo-1.0.tar.gz的包。 这个包里有三个文件，foo.py, setup.py, PKG-INFO，前两个文件和我们之前提到的两个文件一样。 PKG-INFO是关于包的一些信息。然后你就可以把foo-1.0.tar.gz给别人安装了。
+
+安装者要使用这个包时，只需要解压这个foo-1.0.tar.gz文件，再运行命令
+
+```bash
+python setup install
+```
+这个包就会被自动安装到系统合适的位置。
+
+## setuptools
+setuptools 是对 distutils 的增强, 尤其是引入了包依赖管理。
+
+setuptools可以为Python包创建 egg文件， Python 与 egg 文件的关系，相当于java与jar包的关系。
+
+setuptools 提供的 easy_install 脚本可以用来安装 egg包。 另外， easy_install 可以自动从 PyPI 上下载相关的包，并完成安装，升级。
+
+easy_install 提供了多种安装,升级Python包的方式，例如：
+
+```bash
+easy_install SQLObject
+easy_install -f http://pythonpaste.org/package_index.html SQLObject
+easy_install http://example.com/path/to/MyPackage-1.2.3.tgz
+easy_install /my_downloads/OtherPackage-3.2.1-py2.3.egg
+easy_install --upgrade PyProtocols
+```
+后来开发者们觉得 setuptools 开发的太慢了，fork出了 Distribute 项目，然后2013年8月， Distribute 又合并回 setuptools 0.7。
+
+## Conda
+conda 是一个跨平台的包、依赖和环境管理工具，支持多种语言——Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN。它就是要做比pip更多的事情；在python-site-packages之外管理python 库依赖关系。 而且conda同样也像virtualenv一样创建一个虚拟环境。
+
+conda可以让你同时管理安装处理你有关python的任务和跟python无关的任务。
+
+conda使用了一个新的包格式，你不能交替使用pip 和conda。因为pip不能安装和解析conda的包格式。你可以使用两个工具 但是他们是不能交互的。
+
+conda环境的启动命令如下：
+
+```bash
+source activate xxx # 启动
+source deactivate # 关闭
+conda env update -f environment.yml # 更新配置文件
+```
+
+## Pipenv
+Pipenv 汇集了Pip，Pipfile和Virtualenv的功能，是一个强大的命令行工具。
+
+
+Python 似乎有无穷无尽的包管理系统，因为每隔一段时间我总能发现新的包管理系统。
+
+
+# 虚拟环境
+## virtualenv 和 pyenv 对比
+## virtualenv
+virtualenv 通过创建独立Python开发环境的工具, 来解决依赖、版本以及间接权限
+问题。通过将python包安装到一个模块来作为python的包虚拟环境，通过切换目录来实现不同包环境间的切换。
+
+## pyenv
+pyenv 是针对 python 版本的管理，通过修改环境变量的方式实现。pyenv 的美好之处在于，它并没有使用将不同的 PATH 植入不同的 shell 这种高耦合的工作方式，而是简单地在 \$ PATH 的最前面插入了一个垫片路径（shims）：~/.pyenv/shims:/usr/local/bin:/usr/bin:/bin。所有对 Python 可执行文件的查找都会首先被这个 shims 路径截获，从而架空了后面的系统路径。
+
+可以用 pyenv 安装多个python 版本， 比如安装了2.1.1、3.6.4 两个个版本。 用户可以随意切换当前默认的python版本。 但这时候， 每个版本的环境仍是唯一的， 如果我们想在环境中安装一些库的话， 还是会导致这个版本的环境被修改。 这个时候， 如果我们用virtualenv去建立虚拟环境， 就可以完全保证系统路径的干净。无论你在虚拟环境中安装了什么程序， 都不会影响已安装版本的系统环境。
+
+动手实践，可以很容易理解它们之间的关系。
+我在树莓派上实现这个过程。首先需要安装curl 和 git：
+```bash
+sudo apt-get install curl git-core
+```
+安装完成后就可以安装 pyenv 了, 可以参看 [pyenv installer](https://github.com/pyenv/pyenv-installer):
+
+```bash
+$ curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+```
+更新：
+```bash
+$ pyenv update
+```
+修改 .bashrc 文件：
+```bash
+vi ~/.bashrc
+```
+在其中加入：
+```bash
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
+运行下面的命令令其生效
+
+```bash
+source ~/.bashrc
+```
+然后就可以直接在命令行里面敲pyenv了，首先我们可以查看一下有哪些版本的 Python 可以安装：
+```bash
+pyenv install --list
+```
+结果如下：
+```bash
+Available versions:
+  2.1.3
+  2.2.3
+  2.3.7
+  2.4
+  2.4.1
+  2.4.2
+  ···
+```
+接下来， 作为例子我们安装两个版本 (2.7.14 和 3.6.4)：
+```bash
+$ pyenv install 2.7.14
+$ pyenv install 3.6.4
+```
+安装完毕后， 我们可以查看安装的情况:
+```bash
+$ pyenv versions
+```
+切换到3.6.4
+```bash
+$ pyenv global 3.6.4
+```
+运行 pyenv versions, 结果如下：
+```bash
+$ pyenv versions
+  system
+  2.7.14
+* 3.6.4 (set by /home/pi/.pyenv/version)
+```
+可以看到当前的python 版本已经切换到3.6.4了。
+
+如果要切换回系统版本， 请用：
+```bash
+pyenv global system
+```
+如果要卸载某个版本的python, 可以这样：
+```bash
+pyenv uninstall x.x.x
+```
+
+现在我们已经安装了多个python版本，但是这还不够, 为了保证系统环境绝对干净，可以使用virtualenv来创建虚拟 python环境
+virtualenv本是一个独立的工具，如果你是安装我们前面的方式安装pyenv的，那它已经帮我们以plugin的形式安装好了virtualenv, 我们只要使用就好。
+首先我们创建一个3.6.4的虚拟环境
+```bash
+pyenv virtualenv 3.6.4 py3env
+```
+这条命令在本机上创建了一个名为 py3env 的Python虚拟环境，这个环境的真实目录位于：~/.pyenv/versions/
+
+我们可以继续通过“pyenv versions”命令来查看当前的虚拟环境， 结果如下：
+
+```bash
+$ pyenv versions
+  system
+  2.7.14
+* 3.6.4 (set by /home/pi/.pyenv/version)
+  3.6.4/envs/py3env
+  py3env
+```
+
+切换到新的虚拟环境的命令为
+```bash
+pyenv activate py3env
+```
+如果要切换回系统环境， 运行这个命令即可
+```bash
+pyenv deactivate
+```
+直接删除它所在的目录就可以删除该环境了：
+```bash
+rm -rf ~/.pyenv/versions/py3env/
+```
+
+# 远程部署
+## Fabric
+Fabric是一个Python的库，它提供了丰富的同SSH交互的接口，可以用来在本地或远程机器上自动化、流水化地执行Shell命令。因此它非常适合用来做应用的远程部署及系统维护。其上手也极其简单，你需要的只是懂得基本的Shell命令。本文将为大家详细介绍Fabric的使用。
+
+
+
+
+参看资料：
+
+[Python Packaging Authority](https://www.pypa.io/en/latest/#python-packaging-authority)
+
+[pip vs easy_install](https://packaging.python.org/discussions/pip-vs-easy-install/#id3)
+
+[install_requires vs Requirements files](https://packaging.python.org/discussions/install-requires-vs-requirements/)
+
+[Wheel vs Egg](https://packaging.python.org/discussions/wheel-vs-egg/)
+
+[Project Summaries](https://packaging.python.org/key_projects/#setuptools)
+
+[Glossary](https://packaging.python.org/glossary/#term-python-package-index-pypi)
+
+[Python 包工具之间的关系](http://blog.yangyubo.com/2012/07/27/python-packaging/)
+
+[Conda](https://conda.io/docs/)
+
+[What is the difference between venv, pyvenv, pyenv, virtualenv, virtualenvwrapper, pipenv, etc?](https://stackoverflow.com/questions/41573587/what-is-the-difference-between-venv-pyvenv-pyenv-virtualenv-virtualenvwrappe)
+
+[Simple Python Version Management: pyenv](https://github.com/pyenv/pyenv)
