@@ -1,0 +1,22 @@
+首先更新树莓派
+```shell
+sudo apt-get update
+sudo apt-get upgrade
+```
+
+树莓派默认安装了了 python 2和3
+
+sudo apt-get install redis-server
+
+sudo vi /etc/redis/redis.conf
+
+在 #requirepass foobared 下面写
+requirepass <password>
+
+
+sudo service redis-server start
+
+pip3 install redis
+
+
+sudo apt-get install rabbitmq-server
