@@ -1,0 +1,23 @@
+---
+layout: post
+author: 万仕诚
+title: 'To：是介词还是不定式'
+date: 2018-01-24
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
+categories: English
+tags: English
+---
+
+to 既可以作介词，又可以作不定式。to 作介词后跟名词、代词、动名词等。to 作不定式后跟动词原形。做阅读理解的时候，还是很好分析的。但是在写作的时候，自己用起来还是很容易混淆的。下面举两个例子来分析它们之间的区别。
+
+1. I took out the key to unlock the door.(=I took out the key and unlocked the door.)
+  
+    我拿出钥匙打开了锁.  
+
+2. Scientists provided the key to understanding the genetic code that determines every bodily feature.  
+    科学家们找到了破解决定各种身体特征的遗传密码的密钥。
+
+1句中 to 引导不定式作目的状语修饰动词短语 took out。状语是句子的重要修饰成分，它从情况、时间、处所、方式、条件、对象、肯定、否定、范围和程度等方面对谓语中心词进行修饰和限制。不定式具有名词、形容词和副词的特征，在句子中可以作主语、宾语、表语、补足语或状语。不定式的时候通常表示目的、要做的事情，多半修饰前面的动作。
+
+2句中 to 并没有去进一步修饰前面的动作，或进一步说明目的，所以此处用法上 to 作介词，后面接名词或动名词。
+
