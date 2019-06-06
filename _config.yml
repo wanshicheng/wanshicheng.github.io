@@ -34,8 +34,8 @@ header-img: true
 header-img-url: ''
 
 # Comments
-changyan: false
-changyan-appid: 
+changyan: true
+changyan-appid: cysGPef2B
 
 # Share
 social-share: true
