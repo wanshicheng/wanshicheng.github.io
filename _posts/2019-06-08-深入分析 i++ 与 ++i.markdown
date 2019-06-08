@@ -1,0 +1,264 @@
+---
+layout: post
+author: 万仕诚
+title: '深入分析 i++ 与 ++i'
+date: 2017-12-28
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
+categories: java
+tags: java byte-code
+---
+下面一段程序相信每个 Java 程序员都做过：
+```java
+public class PlusPlusTest {
+    @Test
+    public void test0() {
+        int i = 0;
+        i = i++;
+        System.out.println(i);
+    }
+}
+```
+输出结果也不难想，就是 0。
+
+这样的结果，大家肯定会想到一个口诀“先赋值，后自增”。但是有一天当别人问我具体的原因时，我竟发现自己只是记住了答案和一段口诀。现在，我们正式深入分析这个问题。
+
+## 猜测
+大家都知道 i++ 在做运算的时候，是先赋值再自加1，但底层究竟是怎样实现的呢？下面，就三个例子来说明一下i++的底层实现原理。
+
+回到上面的例子：
+```java
+    @Test
+    public void test0() {
+        int i = 0;
+        i = i++;
+        System.out.println(i);
+    }
+```
+程序输出为 0。
+
+也许 i++ 在作计算的时候要引入一个临时的变量，底层可能是这样实现的：
+
+```cpp
+_temp = i;
+i = i + 1;
+i = _temp;
+```
+
+先把i的值赋给一个临时变量_temp，然后再作自加1的操作，最后又把临时变量_temp的值赋给了i，看到这里有点迷糊了吧!
+
+但是如果令 int j = i++，底层也就是这样实现的：
+
+```java
+_temp = i;
+i = i + 1;
+j = _temp;
+```
+
+所以，无论是哪种情况，最后打印出的结果都是 0。
+
+第二个例子：
+```java
+     @Test
+     public void test1() {
+        int i = 0;
+        int sum = (i++)+(i++);
+        System.out.println(sum);
+    }
+```
+程序输出结果为1。
+
+这个题参考第一个例子，可以这么理解：
+
+假设有一个变量 m 接收第一个i++的计算结果，那么 m 的值一定是0，而底层 i 的值变成了 1。
+
+再假设又有一个变量n接收第二个i++的计算结果，由于底层i的值变成了1，所以n的值是1，
+
+那么，计算过程就变成了 m + n，等于 1。
+
+第三个例子：
+```java
+    @Test
+    public void test2() {
+        System.out.println(ipp0());
+        System.out.println(ipp1());
+    }
+
+    public static int ipp0(){
+        int i = 0;
+        try{
+            return i++;
+        }finally{
+            i++;
+        }
+    }
+
+    public static int ipp1(){
+        int i = 0;
+        try{
+            return i++;
+        }finally{
+            return  i++;
+        }
+    }
+```
+输出结果为：
+```java
+0
+1
+```
+
+无论什么时候，只要有 finally 语句块，就一定会执行的，所以底层 i 的值是2。
+
+假设有一个变量 s 接收 try 语句块中 i++ 的值，s 为 0，return s，所以j的值是0。
+
+如果 finally 语句块中的语句改为return i++，结果是什么？结果j的值是1，因为最后的返回结果不是 try 语句块中的结果，而是 finally 语句块中结果。
+
+执行try语句块中的语句，i的值变成了1，所以finally语句块中的语句结果是1，底层i的值是2。
+
+再改一下，finally语句块中的语句为return ++i，结果是什么。
+
+结果j的值是2，因为最后finally语句块中的语句是i自加1之后，再return的。
+
+所以finally语句块中返回的是2，底层i的值是2。
+
+## 反编译验证
+
+### 背景知识
+
+如果你对 Java 的底层不是特别了解，有必要仔细阅读下面的文字。
+
+#### 关于字节码
+
+字节码中在每条指令（操作码）之前的数字标识了字节的位置。例如，指令 1: iconst_1 说明该指令由于没有操作数，所以只有1个字节的长度，因此接下来的字节码就在位置 2；指令1: bipushu 5就会占用两个字节，一个字节用于存储操作码 bipush，另一个存储操作数5，这种情况下，因为操作数占用了位置2，所以下一条指令就会从位置3开始。
+
+字节码指令一般形如 <type>const_<n>，如上文中的 iconst_1，i 指的是 int 类型，1 指的是第 1 个元素；bipushu 5 中的 b 指的是 byte 类型，由于这里没有“_”符号，这里的 5 就是字面量，即数值 5。
+
+
+#### 关于 JVM
+
+Java虚拟机（JVM）是基于栈结构的。对于最初的 main 方法产生的所有的方法调用，都会分配一块内存当作该线程的栈，每个栈由一系列栈帧组成。。每个栈帧对应一个方法，当线程执行方法时，就是栈帧出栈，入栈的过程。每个栈帧包含三部分数据：局部变量表（包含这个方法在执行过程中所需的所有变量，包括一个指向 this 的引用、该方法的所有参数以及其他局部定义的变量。）、操作数栈、动态链接和方法返回地址等信息。对于类方法（即static方法），其参数列表从0开始算起，而对于实例方法，位置0是用来存储this引用。本文主要涉及局部变量表和操作数栈。
+
+局部变量表是一组变量存储空间，用于存放方法参数和方法内部定义的局部变量。
+
+操作数（operand stack）栈也常称为操作栈。当一个方法刚刚开始执行的时候，这个方法的操作数栈是空的，在方法执行过程中，会有各种字节码指令往操作数栈中写入和提取内容，也就是出栈和入栈操作。
+
+![栈帧的概念结构](http://file.skillip.com/image/栈帧的概念结构.png)
+
+本文将采用一种简化的模型，如下所示：
+
+![栈帧的简化结构](http://file.skillip.com/image/栈帧的简化结构.png)
+
+
+我们先编译下面这个文件：
+```java
+public class IPlusPlusTest {
+    public static void main(String[] args) {
+        int i = 0;
+        i = i++;
+        System.out.println(i);
+    }
+}
+```
+然后使用下面的命令可以对 class 文件进行反编译：
+```java
+javap -v -c IPlusPlusTest
+```
+我们得到如下结果：
+```java
+Compiled from "IPlusPlusTest.java"
+public class IPlusPlusTest {
+  public IPlusPlusTest();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: iload_1
+       3: iinc          1, 1
+       6: istore_1
+       7: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+      10: iload_1
+      11: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V
+      14: return
+}
+```
+下面是对字节码的解释：
+
+|字节码助记符|说明|
+|:-:|:-:|
+|aload_0|从局部变量表的相应位置装载一个对象引用到操作数栈的栈顶。|
+|invokespecial|这指令用于调用实例的初始化方法，包括私有方法以及当前类的父类方法。|
+|return|方法返回|
+|iconst_0|把数值0 push到操作数栈|
+|istore_1|把操作数栈写回到本地变量第2个位置|
+|iload_1|把本地变量第2个位置的值push到操作数栈|
+|iinc 1, 1|把本地变量表第2个位置加1|
+|istore_1|把操作数据栈写回本地变量第2个位置|
+
+整个过程如下
+
+![i++](http://file.skillip.com/image/i++.png)
+
+可以发现变量 i 在执行 iinc 的时候已经变成 1 了，但是istore_1又把变量 i 所在位置覆盖成0，所以执行完 i=i++，i 还是原来那个值。
+
+接下来看下 ++i 的实现：
+```java
+public class PlusPlusITest {
+    public static void main(String[] args) {
+        int i = 0;
+        i = ++i;
+        System.out.println(i);
+    }
+}
+```
+对其进行反编译：
+```java
+Compiled from "PlusPlusITest.java"
+public class PlusPlusITest {
+  public PlusPlusITest();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: iinc          1, 1
+       5: iload_1
+       6: istore_1
+       7: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+      10: iload_1
+      11: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V
+      14: return
+}
+
+```
+同样，字节码解释：
+
+|字节码助记符|说明|
+|:-:|:-:|
+|aload_0|从局部变量表的相应位置装载一个对象引用到操作数栈的栈顶。|
+|invokespecial|这指令用于调用实例的初始化方法，包括私有方法以及当前类的父类方法。|
+|return|方法返回|
+|iconst_0|把数值0 push到操作数栈|
+|istore_1|把操作数栈写回到本地变量第2个位置|
+|iload_1|把本地变量第2个位置的值push到操作数栈|
+|istore_1|把操作数据栈写回本地变量第2个位置|
+
+整个过程实现如下 
+
+![++i](http://file.skillip.com/image/++i.png)
+
+和 i++ 不同的地方在于，在变量进入操作数栈之前，就先执行了iinc指令，所以进入操作数的值是加 1 后的值，最后写回的值也是最新值。
+
+
+## 参考资料
+[Java Code To Byte Code-PartOne](http://blog.jamesdbloom.com/JavaCodeToByteCode_PartOne.html)
+
+《深入理解Java虚拟机：JVM高级特性与最佳实践（第 2 版）》
