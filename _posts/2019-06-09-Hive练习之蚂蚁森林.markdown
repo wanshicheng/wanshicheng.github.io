@@ -1,0 +1,581 @@
+---
+author: 万仕诚
+date: 2019-06-09
+layout: post
+title: Hive练习之蚂蚁森林
+cover: 'http://file.wanshicheng.org/assets/img/postcover.jpg'
+categories: big-data
+tags: big-data 大数据 Hive Hadoop
+---
+
+## 背景说明：
+
+以下表记录了用户每天的蚂蚁森林低碳生活领取的记录流水。
+
+user_low_carbon
+
+user_id data_dt low_carbon
+
+用户 日期 减少碳排放
+
+```
+u_001   2017/1/1	10
+u_001	2017/1/2	150
+u_001	2017/1/2	110
+u_001	2017/1/2	10
+u_001	2017/1/4	50
+u_001	2017/1/4	10
+u_001	2017/1/6	45
+u_001	2017/1/6	90
+u_002	2017/1/1	10
+u_002	2017/1/2	150
+u_002	2017/1/2	70
+u_002	2017/1/3	30
+u_002	2017/1/3	80
+u_002	2017/1/4	150
+u_002	2017/1/5	101
+u_002	2017/1/6	68
+u_003	2017/1/1	20
+u_003	2017/1/2	10
+u_003	2017/1/2	150
+u_003	2017/1/3	160
+u_003	2017/1/4	20
+u_003	2017/1/5	120
+u_003	2017/1/6	20
+u_003	2017/1/7	10
+u_003	2017/1/7	110
+u_004	2017/1/1	110
+u_004	2017/1/2	20
+u_004	2017/1/2	50
+u_004	2017/1/3	120
+u_004	2017/1/4	30
+u_004	2017/1/5	60
+u_004	2017/1/6	120
+u_004	2017/1/7	10
+u_004	2017/1/7	120
+u_005	2017/1/1	80
+u_005	2017/1/2	50
+u_005	2017/1/2	80
+u_005	2017/1/3	180
+u_005	2017/1/4	180
+u_005	2017/1/4	10
+u_005	2017/1/5	80
+u_005	2017/1/6	280
+u_005	2017/1/7	80
+u_005	2017/1/7	80
+u_006	2017/1/1	40
+u_006	2017/1/2	40
+u_006	2017/1/2	140
+u_006	2017/1/3	210
+u_006	2017/1/3	10
+u_006	2017/1/4	40
+u_006	2017/1/5	40
+u_006	2017/1/6	20
+u_006	2017/1/7	50
+u_006	2017/1/7	240
+u_007	2017/1/1	130
+u_007	2017/1/2	30
+u_007	2017/1/2	330
+u_007	2017/1/3	30
+u_007	2017/1/4	530
+u_007	2017/1/5	30
+u_007	2017/1/6	230
+u_007	2017/1/7	130
+u_007	2017/1/7	30
+u_008	2017/1/1	160
+u_008	2017/1/2	60
+u_008	2017/1/2	60
+u_008	2017/1/3	60
+u_008	2017/1/4	260
+u_008	2017/1/5	360
+u_008	2017/1/6	160
+u_008	2017/1/7	60
+u_008	2017/1/7	60
+u_009	2017/1/1	70
+u_009	2017/1/2	70
+u_009	2017/1/2	70
+u_009	2017/1/3	170
+u_009	2017/1/4	270
+u_009	2017/1/5	70
+u_009	2017/1/6	70
+u_009	2017/1/7	70
+u_009	2017/1/7	70
+u_010	2017/1/1	90
+u_010	2017/1/2	90
+u_010	2017/1/2	90
+u_010	2017/1/3	90
+u_010	2017/1/4	90
+u_010	2017/1/4	80
+u_010	2017/1/5	90
+u_010	2017/1/5	90
+u_010	2017/1/6	190
+u_010	2017/1/7	90
+u_010	2017/1/7	90
+u_011	2017/1/1	110
+u_011	2017/1/2	100
+u_011	2017/1/2	100
+u_011	2017/1/3	120
+u_011	2017/1/4	100
+u_011	2017/1/5	100
+u_011	2017/1/6	100
+u_011	2017/1/7	130
+u_011	2017/1/7	100
+u_012	2017/1/1	10
+u_012	2017/1/2	120
+u_012	2017/1/2	10
+u_012	2017/1/3	10
+u_012	2017/1/4	50
+u_012	2017/1/5	10
+u_012	2017/1/6	20
+u_012	2017/1/7	10
+u_012	2017/1/7	10
+u_013	2017/1/1	50
+u_013	2017/1/2	150
+u_013	2017/1/2	50
+u_013	2017/1/3	150
+u_013	2017/1/4	550
+u_013	2017/1/5	350
+u_013	2017/1/6	50
+u_013	2017/1/7	20
+u_013	2017/1/7	60
+u_014	2017/1/1	220
+u_014	2017/1/2	120
+u_014	2017/1/2	20
+u_014	2017/1/3	20
+u_014	2017/1/4	20
+u_014	2017/1/5	250
+u_014	2017/1/6	120
+u_014	2017/1/7	270
+u_014	2017/1/7	20
+u_015	2017/1/1	10
+u_015	2017/1/2	20
+u_015	2017/1/2	10
+u_015	2017/1/3	10
+u_015	2017/1/4	20
+u_015	2017/1/5	70
+u_015	2017/1/6	10
+u_015	2017/1/7	80
+u_015	2017/1/7	60
+```
+蚂蚁森林植物换购表，用于记录申领环保植物所需要减少的碳排放量
+
+plant_carbon
+
+plant_id    plant_name  low_carbon
+
+植物编号    植物名  换购植物所需要的碳
+
+```
+p001	梭梭树	17
+p002	沙柳	19
+p003	樟子树	146
+p004	胡杨	215
+``` 
+
+## 题目
+1. 蚂蚁森林植物申领统计
+
+问题：假设2017年1月1日开始记录低碳数据（user_low_carbon），假设2017年10月1日之前满足申领条件的用户都申领了一颗 p004-胡杨，剩余的能量全部用来领取“p002-沙柳”。统计在10月1日累计申领“p002-沙柳”排名前10的用户信息；以及他比后一名多领了几颗沙柳。
+得到的统计结果如下表样式：
+```
+user_id plant_count less_count(比后一名多领了几颗沙柳)
+u_101--->1000--->100
+u_088--->900--->400
+u_103--->500--->xxx…
+```
+2. 蚂蚁森林低碳用户排名分析
+
+问题：查询user_low_carbon表中每日流水记录，条件为：
+- 用户在2017年，连续三天（或以上）的天数里，
+- 每天减少碳排放（low_carbon）都超过100g的用户低碳流水。
+
+需要查询返回满足以上条件的user_low_carbon表中的记录流水。
+
+ 例如用户u_002符合条件的记录如下，因为2017/1/2~2017/1/5连续四天的碳排放量之和都大于等于100g：
+```
+seq（key） user_id data_dt low_carbon
+xxxxx10 u_002 2017/1/2 150
+xxxxx11 u_002 2017/1/2 70
+xxxxx12 u_002 2017/1/3 30
+xxxxx13 u_002 2017/1/3 80
+xxxxx14 u_002 2017/1/4 150
+xxxxx14 u_002 2017/1/5 101
+```
+## 参考答案与解析
+
+这里我们采用 Hive 的 HQL 来解决这两个问题。
+
+### 准备工作
+1. 创建表
+```sql
+create table user_low_carbon(user_id String,data_dt String,low_carbon int) row format delimited fields terminated by '\t';
+create table plant_carbon(plant_id string,plant_name String,low_carbon int) row format delimited fields terminated by '\t';
+```
+2. 加载数据
+```shell
+load data local inpath “/opt/module/data/low_carbon.txt” into table user_low_carbon;
+load data local inpath “/opt/module/data/plant_carbon.txt” into table plant_carbon;
+```
+3. 设置本地模式
+```shell
+set hive.exec.mode.local.auto=true;
+```
+
+### 题目 1 详解
+
+ 1. 统计2017年1月1日至2017年10月1日之前记录低碳数据，并按照降序排列
+ ```sql
+SELECT user_id, SUM(low_carbon) sum_low_carbon
+FROM user_low_carbon 
+WHERE UNIX_TIMESTAMP(data_dt, 'yyyy/MM/dd') >= UNIX_TIMESTAMP('2017/01/01', 'yyyy/MM/dd') 
+AND UNIX_TIMESTAMP(data_dt, 'yyyy/MM/dd') < UNIX_TIMESTAMP('2017/10/01', 'yyyy/MM/dd')
+GROUP BY user_id
+ORDER BY sum_low_carbon desc;
+ ```
+2. 查询换购胡杨所需的碳
+
+```sql
+SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p004';
+```
+结果
+
+```
+low_carbon
+215
+```
+
+3. 查询换购沙柳所需的碳
+```sql
+SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p002';
+```
+结果
+
+```
+low_carbon
+19
+```
+4. 查询前11位用户减去领取一棵胡杨的碳量后，全部领取沙柳的数量。
+
+```sql
+SELECT user_id, sum_low_carbon, floor((sum_low_carbon - t2.low_carbon) / t3.low_carbon) plant_count
+FROM
+(SELECT user_id, SUM(low_carbon) sum_low_carbon
+FROM user_low_carbon 
+WHERE UNIX_TIMESTAMP(data_dt, 'yyyy/MM/dd') >= UNIX_TIMESTAMP('2017/01/01', 'yyyy/MM/dd') 
+AND UNIX_TIMESTAMP(data_dt, 'yyyy/MM/dd') < UNIX_TIMESTAMP('2017/10/01', 'yyyy/MM/dd')
+GROUP BY user_id
+ORDER BY sum_low_carbon desc) t1,
+(SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p004') t2,
+(SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p002') t3
+LIMIT 11;
+```
+有一点要注意，如果是临时表（子查询） 不用指定查询的字段属于哪张表，如果是 join（包括笛卡儿积）操作就必须指定查询字段属于哪张表。临时表一定要用（）包围并取一个别名。
+
+对于前面 3 步查出来的数据，它们之间是没有关联字段，故只能采用笛卡儿积的形式将它们关联起来。上面的查询语句看起来十分复杂，其是就是下面这种结构：
+
+```sql
+SELECT * FROM t1, t2, t3;
+```
+
+至于为什么这里要查询11位的信息，这里先按下不表。嘿嘿嘿！
+
+1. 最后的查询。
+
+```sql
+SELECT user_id, plant_count ,plant_count - LEAD(plant_count, 1, 0) OVER(ORDER BY sum_low_carbon DESC) less_count
+FROM
+(SELECT user_id, sum_low_carbon, floor((sum_low_carbon - t2.low_carbon) / t3.low_carbon) plant_count
+FROM
+(SELECT user_id, SUM(low_carbon) sum_low_carbon
+FROM user_low_carbon 
+WHERE UNIX_TIMESTAMP(data_dt, 'yyyy/MM/dd') >= UNIX_TIMESTAMP('2017/01/01', 'yyyy/MM/dd') 
+AND UNIX_TIMESTAMP(data_dt, 'yyyy/MM/dd') < UNIX_TIMESTAMP('2017/10/01', 'yyyy/MM/dd')
+GROUP BY user_id
+ORDER BY sum_low_carbon DESC) t1,
+(SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p004') t2,
+(SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p002') t3
+LIMIT 11) t4
+LIMIT 10;
+```
+最后的结果：
+
+```
+user_id plant_count     less_count
+u_007   66      3
+u_013   63      10
+u_008   53      7
+u_005   46      1
+u_010   45      1
+u_014   44      5
+u_011   39      2
+u_009   37      5
+u_006   32      9
+u_002   23      1
+```
+由于这里使用了 LEAD() 函数，如果第 4 步不保留第 11 位用户，那么 LEAD() 得到的值就是0，继而导致 u_002 的 less_count 为 23。
+
+### 题目 2 详解
+
+题目 2 会比题目难不少，请大家保持好心态！
+
+#### 基本思路
+
+1. 查询当天碳量超过 100 的记录
+
+```sql
+SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') data_dt, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100;
+```
+
+2. 查询当前日期的上一天（昨天），上两天（前天），下一天（明天），下两天（后天）的日期。
+```sql
+SELECT user_id, today,
+LAG(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) yesterday,
+LAG(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) before_yesterday,
+lead(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) tomorrow,
+lead(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) after_tomorrow
+FROM  
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') today, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1;
+```
+
+3. 查询当前时间的昨天、前天、明天或后天的记录
+
+```sql
+SELECT user_id, today, DATEDIFF(today,yesterday) t_d_y, DATEDIFF(today,before_yesterday) t_d_b ,
+ DATEDIFF(today, tomorrow) t_d_t, DATEDIFF(today, after_tomorrow) t_d_a
+FROM
+(SELECT user_id, today,
+LAG(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) yesterday,
+LAG(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) before_yesterday,
+lead(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) tomorrow,
+lead(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) after_tomorrow
+FROM  
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') today, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1) t2;
+```
+
+4. 查询满足条件的连续天数等于或超过 3 天的记录
+
+```sql
+SELECT user_id, REGEXP_REPLACE(today,'-','/') data_dt
+FROM
+(SELECT user_id, today, DATEDIFF(today,yesterday) t_d_y, DATEDIFF(today,before_yesterday) t_d_b ,
+ DATEDIFF(today, tomorrow) t_d_t, DATEDIFF(today, after_tomorrow) t_d_a
+FROM
+(SELECT user_id, today,
+LAG(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) yesterday,
+LAG(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) before_yesterday,
+LEAD(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) tomorrow,
+LEAD(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) after_tomorrow
+FROM  
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') today, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1) t2) t3
+WHERE (t_d_t=-1 AND t_d_a=-2) 
+OR  (t_d_t=-1 AND t_d_y=1) 
+OR (t_d_y=1 AND t_d_b=2);
+```
+
+5. 关联原表，即可求出最后的结果
+```sql
+SELECT t5.user_id user_id, t5.data_dt data_dt, t5.low_carbon low_carbon
+FROM
+(SELECT user_id, REGEXP_REPLACE(today,'-','/') data_dt
+FROM
+(SELECT user_id, today, DATEDIFF(today,yesterday) t_d_y, DATEDIFF(today,before_yesterday) t_d_b ,
+ DATEDIFF(today, tomorrow) t_d_t, DATEDIFF(today, after_tomorrow) t_d_a
+FROM
+(SELECT user_id, today,
+LAG(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) yesterday,
+LAG(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) before_yesterday,
+LEAD(today,1,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) tomorrow,
+LEAD(today,2,'1970-1-1') OVER(PARTITION BY user_id ORDER BY today ) after_tomorrow
+FROM  
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') today, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1) t2) t3
+WHERE (t_d_t=-1 AND t_d_a=-2) 
+OR  (t_d_t=-1 AND t_d_y=1) 
+OR (t_d_y=1 AND t_d_b=2)) t4 JOIN user_low_carbon t5
+ON t4.user_id = t5.user_id AND t4.data_dt = t5.data_dt;
+```
+结果：
+
+```
+user_id data_dt low_carbon
+u_002   2017/1/2        150
+u_002   2017/1/2        70
+u_002   2017/1/3        30
+u_002   2017/1/3        80
+u_002   2017/1/4        150
+u_002   2017/1/5        101
+u_005   2017/1/2        50
+u_005   2017/1/2        80
+u_005   2017/1/3        180
+u_005   2017/1/4        180
+u_005   2017/1/4        10
+u_008   2017/1/4        260
+u_008   2017/1/5        360
+u_008   2017/1/6        160
+u_008   2017/1/7        60
+u_008   2017/1/7        60
+u_009   2017/1/2        70
+u_009   2017/1/2        70
+u_009   2017/1/3        170
+u_009   2017/1/4        270
+u_010   2017/1/4        90
+u_010   2017/1/4        80
+u_010   2017/1/5        90
+u_010   2017/1/5        90
+u_010   2017/1/6        190
+u_010   2017/1/7        90
+u_010   2017/1/7        90
+u_011   2017/1/1        110
+u_011   2017/1/2        100
+u_011   2017/1/2        100
+u_011   2017/1/3        120
+u_013   2017/1/2        150
+u_013   2017/1/2        50
+u_013   2017/1/3        150
+u_013   2017/1/4        550
+u_013   2017/1/5        350
+u_014   2017/1/5        250
+u_014   2017/1/6        120
+u_014   2017/1/7        270
+u_014   2017/1/7        20
+```
+
+#### 改进一：简单求连续时间
+
+判断连续的时间有什么巧妙地方法呢？
+
+连续的日期，每次间隔 1 天，连续的日期每次递增 1。可以在表中增加一列 ROW_NUMBER。ROW_NUMBER连续，且每次递增一。如果日期也是连续的，那么，连续日期减去ROW_NUMBER得到地差值是一样地。
+
+1. 这里的第一步和“基本思路”的第一步是一样的，第二步需要获取当前日期与 ROW_NUMBER 的相减后得到的日期：
+
+```sql
+SELECT user_id, data_dt, DATE_SUB(data_dt , ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY data_dt)) diff
+FROM
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') data_dt, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1;      
+```
+2. 查询连续的天数
+
+```sql
+SELECT user_id, data_dt, COUNT(*) OVER(PARTITION BY user_id, diff) diffcount
+FROM
+(SELECT user_id, data_dt, DATE_SUB(data_dt , ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY data_dt)) diff
+FROM
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') data_dt, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1) t2
+```
+3. 查询连续天数等于或超过 3 天的记录
+
+```sql
+SELECT user_id, regexp_replace(data_dt,'-','/') data_dt
+FROM
+(SELECT user_id, data_dt, COUNT(*) OVER(PARTITION BY user_id, diff) diffcount
+FROM
+(SELECT user_id, data_dt, DATE_SUB(data_dt , ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY data_dt)) diff
+FROM
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') data_dt, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1) t2) t3
+WHERE diffcount>=3;
+```
+
+4. 关联原表，即可求出最后的结果
+
+```sql
+SELECT t5.user_id user_id, t5.data_dt data_dt, t5.low_carbon low_carbon
+FROM
+(SELECT user_id, regexp_replace(data_dt,'-','/') data_dt
+FROM
+(SELECT user_id, data_dt, COUNT(*) OVER(PARTITION BY user_id, diff) diffcount
+FROM
+(SELECT user_id, data_dt, DATE_SUB(data_dt , ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY data_dt)) diff
+FROM
+(SELECT user_id, REGEXP_REPLACE(data_dt, '/', '-') data_dt, SUM(low_carbon)
+FROM user_low_carbon
+WHERE  year(regexp_replace(data_dt,'/','-')) = 2017
+GROUP BY user_id, data_dt
+HAVING SUM(low_carbon) > 100) t1) t2) t3
+WHERE diffcount>=3) t4 JOIN user_low_carbon t5
+ON t4.user_id = t5.user_id AND t4.data_dt = t5.data_dt;
+```
+#### 改进二：去掉 JOIN
+
+众所周知，Hive 的 JOIN 是非常消耗资源的，一般能避免 JOIN 就要避免。
+
+1. 查询当天碳量超过 100 的记录
+```sql
+SELECT user_id, REGEXP_REPLACE(data_dt,'/','-') data_dt, COLLECT_LIST(low_carbon) low_carbon_list, SUM(low_carbon) sum_low_carbon
+FROM user_low_carbon
+GROUP BY user_id, data_dt
+HAVING sum_low_carbon > 100;
+```
+与基本数据不同的是，这里使用 COLLECT_LIST() 函数，将分组后的 low_carbon 组合成一个有序列表。这里需要注意的是 collect_list 不去重而 collect_set 去重。
+
+2. 这里与“改进一”的第 1 步思路一样
+
+```sql
+SELECT user_id, low_carbon_list, data_dt, DATE_SUB(data_dt, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY data_dt)) diff
+FROM
+(SELECT user_id, REGEXP_REPLACE(data_dt,'/','-') data_dt, COLLECT_LIST(low_carbon) low_carbon_list, SUM(low_carbon) sum_low_carbon
+FROM user_low_carbon
+GROUP BY user_id, data_dt
+HAVING sum_low_carbon > 100) t1;
+```
+
+3. 这里与“改进一”第 2 步思路一样
+
+```sql
+SELECT user_id, low_carbon_list, data_dt, COUNT(*) OVER(PARTITION BY user_id, diff) diff_count
+FROM
+(SELECT user_id, low_carbon_list, data_dt, DATE_SUB(data_dt, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY data_dt)) diff
+FROM
+(SELECT user_id, REGEXP_REPLACE(data_dt,'/','-') data_dt, COLLECT_LIST(low_carbon) low_carbon_list, SUM(low_carbon) sum_low_carbon
+FROM user_low_carbon
+GROUP BY user_id, data_dt
+HAVING sum_low_carbon > 100) t1) t2;
+```
+
+4. 用侧写打开列表，即可得到最后的结果
+
+```sql
+SELECT user_id, REGEXP_REPLACE(data_dt,'-','/') data_dt, low_carbon
+FROM
+(SELECT user_id, low_carbon_list, data_dt, COUNT(*) OVER(PARTITION BY user_id, diff) diff_count
+FROM
+(SELECT user_id, low_carbon_list, data_dt, DATE_SUB(data_dt, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY data_dt)) diff
+FROM
+(SELECT user_id, REGEXP_REPLACE(data_dt,'/','-') data_dt, COLLECT_LIST(low_carbon) low_carbon_list, SUM(low_carbon) sum_low_carbon
+FROM user_low_carbon
+GROUP BY user_id, data_dt
+HAVING sum_low_carbon > 100) t1) t2) t3
+LATERAL VIEW EXPLODE(low_carbon_list) list_view AS low_carbon
+WHERE diff_count >= 3;
+```
+"基本思路"与“改进一”相比只是技巧的使用，而“改进二”则是充分利用 Hadoop 的特点，避免使用 JOIN，大量节省了资源和时间。经测试，在目前的数据规模下，“改进二”执行的效率前两者的 3 倍左右。随着数据规模不断增加，“改进二”对效率的提高会愈发明显。
