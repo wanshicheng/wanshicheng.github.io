@@ -237,22 +237,9 @@ ORDER BY sum_low_carbon desc;
 ```sql
 SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p004';
 ```
-结果
-
-```
-low_carbon
-215
-```
-
 3. 查询换购沙柳所需的碳
 ```sql
 SELECT low_carbon FROM plant_carbon WHERE plant_id = 'p002';
-```
-结果
-
-```
-low_carbon
-19
 ```
 4. 查询前11位用户减去领取一棵胡杨的碳量后，全部领取沙柳的数量。
 
